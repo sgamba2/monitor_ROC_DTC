@@ -1,17 +1,18 @@
  DAQ07
  --------------------EVENT1:----------------------------------------
- DTC HEADER: COUNT  LINVAL SUBSYS EWTAG  EWTAG  EWTAG  STATUS DTCID
+ DTC HEADER: also called subevent header
  0x00000000: 0x00b0 0x0000 0x0000 0x0000 0x0000 0x2006 0x0000 0x0000
  0x00000010: 0x0000 0x0000 0x0000 0x0000 0x0081 0x00c1 0x0000 0x0001
  0x00000020: 0x0000 0x0000 0x0000 0x0000 0xffff 0x025e 0xffff 0x0000
  Each word is 2 byte = 16bits.
  (0x00b0 = 11 number of Data Payload packets to follow the Data Header packet)
  0x00b0---> 0 is 4bits,0 is 4 bits, b is 4bits and 0 is 4bits.
+ 0x2006----->8198 EW
  0)ROC HEADER: (0x0010 is the lenght of the event in the ROC: in this case no channels in the ROC)
  0x00000030: 0x0010 0x9050 0x0000 0x0000 0x0000 0x0000 0x0508 0x0000
  0x9050----> first error: we should have a 8 not a 9
  question: shouldnt be there a 0x0100
- 1)ROC HEADER:COUNT LINVAL SUBSYS EWTAG  EWTAG  EWTAG  STATUS DTCID
+ 1)ROC HEADER:COUNT LINVAL SUBPAC EWTAG  EWTAG  EWTAG  STATUS DTCID
  0x00000040: 0x0030 0x8150 0x0002 0x0000 0x0000 0x0000 0x0101 0x0000
  0x0101 is indicating that the ROC is full (responding)
  CHANNEL:    CH     TDC    TDC    TOT    ADC    ADC    ADC    ADC

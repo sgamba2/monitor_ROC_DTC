@@ -1,0 +1,77 @@
+>>>> ------- ts =     0 NDTCs: 1 DTC: 0 EWTag:         0 nbytes:  176 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     1 NDTCs: 1 DTC: 0 EWTag:         1 nbytes:  208 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     2 NDTCs: 1 DTC: 0 EWTag:         2 nbytes:  240 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =     3 NDTCs: 1 DTC: 0 EWTag:         3 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     4 NDTCs: 1 DTC: 0 EWTag:         4 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     5 NDTCs: 1 DTC: 0 EWTag:         5 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =     6 NDTCs: 1 DTC: 0 EWTag:         6 nbytes:  368 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     7 NDTCs: 1 DTC: 0 EWTag:         7 nbytes:  400 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     8 NDTCs: 1 DTC: 0 EWTag:         8 nbytes:  432 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =     9 NDTCs: 1 DTC: 0 EWTag:         9 nbytes:  464 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    10 NDTCs: 1 DTC: 0 EWTag:        10 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    11 NDTCs: 1 DTC: 0 EWTag:        11 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    12 NDTCs: 1 DTC: 0 EWTag:        12 nbytes:  560 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    13 NDTCs: 1 DTC: 0 EWTag:        13 nbytes:  592 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    14 NDTCs: 1 DTC: 0 EWTag:        14 nbytes:  624 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    15 NDTCs: 1 DTC: 0 EWTag:        15 nbytes:  656 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+the sum is
+
+>>>> ------- ts =    16 NDTCs: 1 DTC: 0 EWTag:        16 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    17 NDTCs: 1 DTC: 0 EWTag:        17 nbytes:  784 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    18 NDTCs: 1 DTC: 0 EWTag:        18 nbytes:  816 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    19 NDTCs: 1 DTC: 0 EWTag:        19 nbytes:  848 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    20 NDTCs: 1 DTC: 0 EWTag:        20 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    21 NDTCs: 1 DTC: 0 EWTag:        21 nbytes:  560 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    22 NDTCs: 1 DTC: 0 EWTag:        22 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    23 NDTCs: 1 DTC: 0 EWTag:        23 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    24 NDTCs: 1 DTC: 0 EWTag:        24 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    25 NDTCs: 1 DTC: 0 EWTag:        25 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    26 NDTCs: 1 DTC: 0 EWTag:        26 nbytes:  400 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    27 NDTCs: 1 DTC: 0 EWTag:        27 nbytes:  272 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    28 NDTCs: 1 DTC: 0 EWTag:        28 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    29 NDTCs: 1 DTC: 0 EWTag:        29 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    30 NDTCs: 1 DTC: 0 EWTag:        30 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    31 NDTCs: 1 DTC: 0 EWTag:        31 nbytes:  560 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    32 NDTCs: 1 DTC: 0 EWTag:        32 nbytes:  144 ROC status: 0x0508 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    33 NDTCs: 1 DTC: 0 EWTag:        33 nbytes:  336 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    34 NDTCs: 1 DTC: 0 EWTag:        34 nbytes:  144 ROC status: 0x0508 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    35 NDTCs: 1 DTC: 0 EWTag:        35 nbytes:  144 ROC status: 0x0508 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    36 NDTCs: 1 DTC: 0 EWTag:        36 nbytes:  144 ROC status: 0x0508 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    37 NDTCs: 1 DTC: 0 EWTag:        37 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    38 NDTCs: 1 DTC: 0 EWTag:        38 nbytes:  656 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    39 NDTCs: 1 DTC: 0 EWTag:        39 nbytes:  688 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    40 NDTCs: 1 DTC: 0 EWTag:        40 nbytes:  720 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    41 NDTCs: 1 DTC: 0 EWTag:        41 nbytes:  752 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    42 NDTCs: 1 DTC: 0 EWTag:        42 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    43 NDTCs: 1 DTC: 0 EWTag:        43 nbytes:  176 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    44 NDTCs: 1 DTC: 0 EWTag:        44 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    45 NDTCs: 1 DTC: 0 EWTag:        45 nbytes:  528 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    46 NDTCs: 1 DTC: 0 EWTag:        46 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    47 NDTCs: 1 DTC: 0 EWTag:        47 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    48 NDTCs: 1 DTC: 0 EWTag:        48 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    49 NDTCs: 1 DTC: 0 EWTag:        49 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    50 NDTCs: 1 DTC: 0 EWTag:        50 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    51 NDTCs: 1 DTC: 0 EWTag:        51 nbytes:  144 ROC status: 0x0100 0x0508 0x0508 0x0508 0x0508 0x0508
+
+>>>> ------- ts =    52 NDTCs: 1 DTC: 0 EWTag:        52 nbytes:  560 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    53 NDTCs: 1 DTC: 0 EWTag:        53 nbytes:  592 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    54 NDTCs: 1 DTC: 0 EWTag:        54 nbytes:  464 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    55 NDTCs: 1 DTC: 0 EWTag:        55 nbytes:  560 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    56 NDTCs: 1 DTC: 0 EWTag:        56 nbytes:  496 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    57 NDTCs: 1 DTC: 0 EWTag:        57 nbytes:  592 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    58 NDTCs: 1 DTC: 0 EWTag:        58 nbytes:  592 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    59 NDTCs: 1 DTC: 0 EWTag:        59 nbytes:  624 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    60 NDTCs: 1 DTC: 0 EWTag:        60 nbytes:  400 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    61 NDTCs: 1 DTC: 0 EWTag:        61 nbytes:  432 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    62 NDTCs: 1 DTC: 0 EWTag:        62 nbytes:  464 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    63 NDTCs: 1 DTC: 0 EWTag:        63 nbytes: 1168 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    64 NDTCs: 1 DTC: 0 EWTag:        64 nbytes:  176 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
+>>>> ------- ts =    65 NDTCs: 1 DTC: 0 EWTag:        65 nbytes:  208 ROC status: 0x0101 0x0508 0x0508 0x0508 0x0508 0x0508
