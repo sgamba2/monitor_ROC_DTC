@@ -9,7 +9,7 @@ using namespace std;
 
 
 void compare_different_ROCs(){
-  string file("/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat");
+  string file("mu2edaq09_dtc1_run_066.dat"); //"/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat"
     ifstream in(file, std::ios::binary );
 
  
@@ -79,7 +79,7 @@ int tot_roc_size_1=0;
 int val_status_1=0;
 int roc_not_empty_1=0;
 
-while(!in.eof() and k_1<=100 ){
+while(!in.eof()  ){
     if (loc_1 == 0){
        printf(" 0x%08x: ",k_1*2);
        lines_count++;
@@ -109,7 +109,6 @@ while(!in.eof() and k_1<=100 ){
         roc_size_1=size_1>>4;
         val_status_1=1;
         tot_roc_size_1+=roc_size_1;
-        roc_size_vec_1.push_back(roc_size_1);
         line_number_roc_1=lines_count;
         num_roc_1++;
         NUM_ROC_1++;
@@ -145,6 +144,7 @@ while(!in.eof() and k_1<=100 ){
     k_1++;
 }
 
+        printf("\n");
 
   if (in.bad()) {
     std::cerr << "Error reading from file" << std::endl;
@@ -175,7 +175,7 @@ int tot_roc_size_2=0;
 int val_status_2=0;
 int roc_not_empty_2=0;
 
-while(!in2.eof() and k_2<=100 ){
+while(!in2.eof() ){
     if (loc_2 == 0){
        printf(" 0x%08x: ",k_2*2);
        lines_count_2++;
@@ -203,7 +203,6 @@ while(!in2.eof() and k_2<=100 ){
         roc_size_2=size_2>>4;
         val_status_2=1;
         tot_roc_size_2+=roc_size_2;
-        roc_size_vec_2.push_back(roc_size_2);
         line_number_roc_2=lines_count_2;
         num_roc_2++;
         NUM_ROC_2++;
@@ -246,8 +245,8 @@ while(!in2.eof() and k_2<=100 ){
 printf("\n");
 printf("TOTAL NUMBER OF LINES %d\n",lines_count);
 printf("TOTAL NUMBER OF EVENTS %d\n",num_events);
-printf("TOTAL NUMBER OF ROCS2 %d\n",NUM_ROC_2);
-printf("TOTAL NUMBER OF ROCS1 %d\n",NUM_ROC_1);
+printf("TOTAL NUMBER OF ROCS2 %d\n",num_roc_2);
+printf("TOTAL NUMBER OF ROCS1 %d\n",num_roc_1);
 
  printf("TOTAL NUMBER OF size roc1  %lu\n",size(roc_size_vec_1));
  printf("TOTAL NUMBER OF line roc1  %lu\n",size(line_number_roc_vec_1));
