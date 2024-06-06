@@ -79,12 +79,15 @@ vector<float> line_number_roc_vec_1;
 vector<int> roc_size_vec_2;
 vector<float> roc_status_vec_2;
 vector<float> line_number_roc_vec_2;
+int roc_size_2=-1;
+int roc_size_1=-1;
+ int not_the_first_1=0;
 
 int roc_size=-1;
 int NUM_ROC_1=0;
 int NUM_ROC_2=0;
-
-while(!in.eof()  ){
+ int not_the_first_2=0;
+while(!in.eof() ){
     if (loc == 0){
        printf(" 0x%08x: ",k*2);
        lines_count++;
@@ -109,65 +112,77 @@ while(!in.eof()  ){
         dtc_tag_vec.push_back(size);
         Hist_dtc_tag->Fill(size);
         val_dtc=0;
+
     }
-    if(loc==0 & roc_size==-1 & lines_count>line_number_dtc+2){
+    if(loc==0 & val_dtc==0 & lines_count>line_number_dtc+2 ){ //roc_size==-1
         roc_size=size>>4;
         val_status=1;
+
     }
 
-    if(loc==1 and val_status==1 and (hi%16)==1){
+    if(loc==1 and val_status==1 and (hi%16)==1 ){
         line_number_roc_1=lines_count;
         line_number_roc_vec_1.push_back(line_number_roc_1);
         Hist_dtc_size_vs_roc_size_1->Fill(dtc_size,roc_size);
         tot_roc_size_1+=roc_size;
+	roc_size_1=roc_size;
         roc_size_vec_1.push_back(roc_size);
-	    which_roc=1;
+	which_roc=1;
         NUM_ROC_1++;
+	not_the_first_1++;
 	printf("sono qui1s");
 
     }
     if(loc==1 and val_status==1 and (hi%16)==0 ){
         line_number_roc_2=lines_count;
         tot_roc_size_2+=roc_size;
+	roc_size_2=roc_size;
         line_number_roc_vec_2.push_back(line_number_roc_2);
         Hist_dtc_size_vs_roc_size_2->Fill(dtc_size,roc_size);
         roc_size_vec_2.push_back(roc_size);
-	    which_roc=2;
+	which_roc=2;
         NUM_ROC_2++;
+	not_the_first_2++;
 	printf("sono qui2s");
     }
-    if(loc==6 & val_status==1 &  which_roc==1){
+
+    if(loc==6  and val_dtc==0){
+      if(which_roc==1){
         roc_status_vec_1.push_back(size/4.);
-        val_status=0;
-    }
-    if(loc==6 & val_status==1 &  which_roc==2){
+      }
+      if(which_roc==2){
         roc_status_vec_2.push_back(size/4.);
+      }
         val_status=0;
+
     }
     loc += 1;
     if (loc == 8) {
         printf("\n");
         loc  = 0;
+	if(not_the_first_2==roc_size_2 and which_roc!=1){
+	roc_size=-1;
+	roc_size_2=-1;
+        which_roc=0;
+	}
+	if(not_the_first_1==roc_size_1 and which_roc!=2){
+	roc_size=-1;
+	roc_size_1=-1;
+        which_roc=0;
+	}
     }
     if((line_number_dtc+dtc_size-1)==lines_count){
         dtc_size=-1;
-        if(which_roc==1){
-            Hist_NUM_ROCS_1->Fill(NUM_ROC_1);
-        }
-        if(which_roc==2){
-            Hist_NUM_ROCS_2->Fill(NUM_ROC_2);
-        }
-        NUM_ROC_1=0;
-        NUM_ROC_2=0;
     }
-    if((line_number_roc_1+roc_size-1)==lines_count){
-        roc_size=-1;
-        which_roc=0;
-    }
-     if((line_number_roc_2+roc_size-1)==lines_count){
-        roc_size=-1;
-        which_roc=0;
-    }
+
+
+
+
+   
+    //if((line_number_roc_2+roc_size-1)==lines_count){
+    //  roc_size=-1;
+    //   which_roc=0;
+    //}
     k++;
 }
 printf("\n");
@@ -176,39 +191,55 @@ printf("TOTAL NUMBER OF EVENTS %d\n",num_events);
 printf("TOTAL NUMBER OF ROCS2 %d\n",NUM_ROC_2);
 printf("TOTAL NUMBER OF ROCS1 %d\n",NUM_ROC_1);
 
+ printf("TOTAL NUMBER OF size roc1  %lu\n",size(roc_size_vec_1));
+ printf("TOTAL NUMBER OF line roc1  %lu\n",size(line_number_roc_vec_1));
+ printf("TOTAL NUMBER OF status roc1  %lu\n",size(roc_status_vec_1));
 
+ printf("TOTAL NUMBER OF size roc2  %lu\n",size(roc_size_vec_2));
+ printf("TOTAL NUMBER OF line roc2  %lu\n",size(line_number_roc_vec_2));
+ printf("TOTAL NUMBER OF status roc2  %lu\n",size(roc_status_vec_2));
+
+ printf("TOTAL NUMBER OF tag dtc   %lu\n",size(dtc_tag_vec));
+ printf("TOTAL NUMBER OF size dtc   %lu\n",size(dtc_size_vec));
+
+            Hist_NUM_ROCS_2->Fill(NUM_ROC_2);
+             Hist_NUM_ROCS_1->Fill(NUM_ROC_1);
 
 
 tot_dtc_size/=(num_events-1);
-tot_roc_size_1/=((num_events-1)*6);
-tot_roc_size_2/=((num_events-1)*6);
+tot_roc_size_1/=(NUM_ROC_1);
+tot_roc_size_2/=(NUM_ROC_2);
 
 
-for(int i=0;i<num_events;i++){
+ for(int i=0;i<size(dtc_size_vec)-1;i++){
     Hist_dtc_event_size->Fill(dtc_size_vec.at(i));
     Hist_residual_dtc_size->Fill(dtc_size_vec.at(i)-tot_dtc_size);
     Hist_event_vs_dtc_size->Fill(i,dtc_size_vec.at(i)-tot_dtc_size);
     Hist_event_vs_dtc_tag->Fill(i,dtc_tag_vec.at(i));
   
 }
-for(int i=0;i<num_events;i++){
+for(int i=0;i<size(roc_size_vec_1);i++){
+
    Hist_roc_size_vs_line_number_roc_1->Fill(roc_size_vec_1.at(i),line_number_roc_vec_1.at(i));
-   Hist_roc_size_vs_line_number_roc_2->Fill(roc_size_vec_2.at(i),line_number_roc_vec_2.at(i));
    Hist_line_number_roc_1->Fill(line_number_roc_vec_1.at(i));
-   Hist_line_number_roc_2->Fill(line_number_roc_vec_2.at(i));
    Hist_roc_size_1->Fill(roc_size_vec_1.at(i));
    Hist_event_vs_roc_size_1->Fill(i,roc_size_vec_1.at(i));
    Hist_roc_status_1->Fill(roc_status_vec_1.at(i));
-   Hist_roc_status_2->Fill(roc_status_vec_2.at(i));
    Hist_event_vs_roc_status_1->Fill(i,roc_status_vec_1.at(i));
    Hist_roc_size_vs_roc_status_1->Fill(roc_size_vec_1.at(i),roc_status_vec_1.at(i));
-   Hist_roc_size_2->Fill(roc_size_vec_2.at(i));
+ 
+}
+
+for(int i=0;i<size(roc_size_vec_2);i++){
+
+   Hist_roc_size_vs_line_number_roc_2->Fill(roc_size_vec_2.at(i),line_number_roc_vec_2.at(i));
+   Hist_line_number_roc_2->Fill(line_number_roc_vec_2.at(i));
+   Hist_roc_status_2->Fill(roc_status_vec_2.at(i));
+  Hist_roc_size_2->Fill(roc_size_vec_2.at(i));
    Hist_event_vs_roc_size_2->Fill(i,roc_size_vec_2.at(i));
    Hist_event_vs_roc_status_2->Fill(i,roc_status_vec_2.at(i));
    Hist_roc_size_vs_roc_status_2->Fill(roc_size_vec_2.at(i),roc_status_vec_2.at(i));
-}
-
-
+ }
 TCanvas * c3 = new TCanvas("c3", "c3");
 Hist_num_events->Fill((double)num_events);
 Hist_num_events->SetLineColor(2);
