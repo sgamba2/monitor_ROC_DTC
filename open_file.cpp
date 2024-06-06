@@ -58,6 +58,7 @@ int val=0;
 int tot_dtc_size=0;
 int tot_roc_size=0;
 int val_status=0;
+ int size_tot=0;
 while(!in.eof()){
     //for (int i=0; i<2016; i++) {
     if (loc == 0){
@@ -67,7 +68,7 @@ while(!in.eof()){
     in.read(reinterpret_cast<char*>(&lo), 1); 
     in.read(reinterpret_cast<char*>(&hi), 1);
     int size = (hi << 8) | lo;
-    printf("0x%04x ",size);
+    //printf("0x%04x ",size);
 
     if(loc==0 & dtc_size==-1){
         dtc_size=size>>4;
@@ -98,9 +99,15 @@ while(!in.eof()){
         Hist_roc_size_vs_line_number_roc->Fill(roc_size,line_number_roc);
         Hist_dtc_size_vs_roc_size->Fill(dtc_size,roc_size);
     }
+
     if(loc==6 & val_status==1){
         roc_status_vec.push_back(size/4.);
+    }
+if(loc==7 & val_status==1){
+  printf("SONO QUI");
         val_status=0;
+	size_tot+=size;
+printf("0x%04x ",size);
     }
     loc += 1;
     if (loc == 8) {
@@ -125,7 +132,7 @@ printf("\n");
 printf("TOTAL NUMBER OF LINES %d\n",lines_count);
 printf("TOTAL NUMBER OF EVENTS %d\n",num_events);
 printf("TOTAL NUMBER OF ROCS %d\n",num_roc);
-
+printf("TOTAL NUMBER OF ROCS %d\n",size_tot);
 TCanvas * c3 = new TCanvas(Form("c3_%d",daq), Form("c3_%d",daq));
 Hist_num_events->Fill((double)num_events);
 Hist_num_events->Draw();
@@ -186,7 +193,6 @@ Hist_residual_dtc_size->Draw();
 
 
 void open_file(){
-    process_files("mu2edaq09_dtc1_run_066.dat",9);
-    process_files("mu2edaq07_dtc1_run_066.dat",7);
+    process_files("/exp/mu2e/data/projects/tracker/vst/datasets/val/external_cf0_10000_mu2edaq09_0009.dat",9);
 
 }

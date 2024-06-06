@@ -9,7 +9,7 @@ using namespace std;
 
 
 void open1file(){
-    ifstream in9("emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
+    ifstream in9("/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
 
  
     if(!in9) {
@@ -64,7 +64,7 @@ int tot_roc_size_9=0;
 int val_status_9=0;
 int roc_not_empty_9=0;
 
-while(!in9.eof() and k_9<200 ){
+while(!in9.eof() and k_9<=100 ){
     if (loc_9 == 0){
        printf(" 0x%08x: ",k_9*2);
        lines_count_9++;

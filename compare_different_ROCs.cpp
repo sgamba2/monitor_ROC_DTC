@@ -9,7 +9,7 @@ using namespace std;
 
 
 void compare_different_ROCs(){
-    ifstream in("emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
+    ifstream in("/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
 
  
     if(!in) {
@@ -58,82 +58,97 @@ void compare_different_ROCs(){
     TH1F* Hist_roc_status_2 = new TH1F(Form("Hist_roc_status_%d",2),Form("Hist_roc_status_%d",2), 1000, 0.,1000.);
 
 
-int k_1=0;
-unsigned char lo_1;
-int loc_1 = 0;
-unsigned char hi_1;
-int num_events_1=0;
-int dtc_size_1=-1;
-vector<int> dtc_size_vec_1;
-vector<int> dtc_tag_vec_1;
+int k=0;
+unsigned char lo;
+int loc = 0;
+unsigned char hi;
+int num_events=0;
+int dtc_size=-1;
+vector<int> dtc_size_vec;
+vector<int> dtc_tag_vec;
 vector<int> roc_size_vec_1;
 vector<float> roc_status_vec_1;
 vector<float> line_number_roc_vec_1;
-int lines_count_1=0;
-int line_number_dtc_1=0;
+vector<int> roc_size_vec_2;
+vector<float> roc_status_vec_2;
+vector<float> line_number_roc_vec_2;
+int lines_count=0;
+int line_number_dtc=0;
 int roc_size_1=-1;
 int line_number_roc_1=0;
 int num_roc_1=0;
-int NUM_ROC_1=0;
+ int NUM_ROC_1=0;
+int num_roc_2=0;
+int NUM_ROC_2=0;
 int val_1=0;
 int tot_dtc_size_1=0;
 int tot_roc_size_1=0;
+int tot_roc_size_2=0;
 int val_status_1=0;
 int roc_not_empty_1=0;
 int valora_1=0;
-while(!in.eof() and k_1<200 ){
-    if (loc_1 == 0){
-       printf(" 0x%08x: ",k_1*2);
-       lines_count_1++;
+ int which_roc=0;
+while(!in.eof()  ){
+    if (loc == 0){
+       printf(" 0x%08x: ",k*2);
+       lines_count++;
     }
-    in.read(reinterpret_cast<char*>(&lo_1), 1); 
-    in.read(reinterpret_cast<char*>(&hi_1), 1);
-    int size_1 = (hi_1 << 8) | lo_1;
-    printf("0x%04x ",size_1);
+    in.read(reinterpret_cast<char*>(&lo), 1); 
+    in.read(reinterpret_cast<char*>(&hi), 1);
+    int size = (hi << 8) | lo;
+    printf("0x%04x ",size);
 
-    if(loc_1==0 & dtc_size_1==-1){
-        dtc_size_1=size_1>>4;
-        dtc_size_vec_1.push_back(dtc_size_1);
-        tot_dtc_size_1+=dtc_size_1;
-        line_number_dtc_1=lines_count_1;
-        num_events_1++;
-        Hist_line_number_dtc_1->Fill(line_number_dtc_1);
-        Hist_dtc_event_size_vs_line_number_dtc_1->Fill(dtc_size_1,line_number_dtc_1);
+    if(loc==0 & dtc_size==-1){
+        dtc_size=size>>4;
+        dtc_size_vec.push_back(dtc_size);
+        tot_dtc_size+=dtc_size;
+        line_number_dtc=lines_count;
+        num_events++;
+        Hist_line_number_dtc_1->Fill(line_number_dtc);
+        Hist_dtc_event_size_vs_line_number_dtc_1->Fill(dtc_size,line_number_dtc);
         val_1=1;
     }
 
-    if(loc_1==2 and val_1==1){
-        dtc_tag_vec_1.push_back(size_1);
-        Hist_dtc_tag_1->Fill(size_1);
+    if(loc==2 and val_1==1){
+        dtc_tag_vec.push_back(size);
+        Hist_dtc_tag_1->Fill(size);
         val_1=0;
     }
-    if(loc_1==0 & roc_size_1==-1 & lines_count_1>line_number_dtc_1+2){
-        roc_size_1=size_1>>4;
+    if(loc==0 & roc_size_1==-1 & lines_count>line_number_dtc+2){
+        roc_size_1=size>>4;
         val_status_1=1;
-        tot_roc_size_1+=roc_size_1;
-        roc_size_vec_1.push_back(roc_size_1);
-        line_number_roc_1=lines_count_1;
+        line_number_roc_1=lines_count;
         num_roc_1++;
         NUM_ROC_1++;
 
     }
 
  
-    if(loc_1==1 and val_status_1==1 and (hi_1%16)==1){
+    if(loc==1 and val_status_1==1 and (hi%16)==1){
         line_number_roc_vec_1.push_back(line_number_roc_1);
         Hist_dtc_size_vs_roc_size_1->Fill(dtc_size_1,roc_size_1);
+        tot_roc_size_1+=roc_size_1;
         roc_size_vec_1.push_back(roc_size_1);
         roc_not_empty_1=1;
+	which_roc=1;
+	printf("sono qui1s");
+
     }
-    if(loc_1==1 and val_status_1==1 and ((hi_1%16)==0 || (hi_1%16)==2 || (hi_1%16)==3 || (hi_1%16)==4 || (hi_1%16)==5)){
-        /*line_number_roc_vec.push_back(line_number_roc);
-        Hist_dtc_size_vs_roc_size->Fill(dtc_size,roc_size);
-        roc_size_vec.push_back(roc_size);
-        roc_not_empty=1;*/
-        valora_1+=1;
+    if(loc_1==1 and val_status_1==1 and (hi_1%16)==0 ){
+        tot_roc_size_2+=roc_size_1;
+        line_number_roc_vec_2.push_back(line_number_roc_1);
+        Hist_dtc_size_vs_roc_size_2->Fill(dtc_size_1,roc_size_1);
+        roc_size_vec_2.push_back(roc_size_1);
+        roc_not_empty_1=1;
+	which_roc=2;
+	printf("sono qui2s");
     }
-    if(loc_1==6 & val_status_1==1 & roc_not_empty_1==1){
+    if(loc_1==6 & val_status_1==1 & roc_not_empty_1==1 and which_roc==1){
         roc_status_vec_1.push_back(size_1/4.);
+        val_status_1=0;
+    }
+    if(loc_1==6 & val_status_1==1 & roc_not_empty_1==1 and which_roc==2){
+        roc_status_vec_2.push_back(size_1/4.);
         val_status_1=0;
     }
     loc_1 += 1;
@@ -152,20 +167,18 @@ while(!in.eof() and k_1<200 ){
 
     }
  
-    k_1++;
+    k++;
 }
 printf("\n");
 printf("TOTAL NUMBER OF LINES %d\n",lines_count_1);
 printf("TOTAL NUMBER OF EVENTS %d\n",num_events_1);
 printf("TOTAL NUMBER OF ROCS %d\n",num_roc_1);
-printf("TOTAL NUMBER OF ROCS %d\n",valora_1);
 
 
 
-/*
+
 tot_dtc_size_1/=66;
 tot_roc_size_1/=(66*6);
-tot_dtc_size_2/=66;
 tot_roc_size_2/=(66*6);
 
 
@@ -174,10 +187,7 @@ for(int i=0;i<66;i++){
     Hist_residual_dtc_size_1->Fill(dtc_size_vec_1.at(i)-tot_dtc_size_1);
     Hist_event_vs_dtc_size_1->Fill(i,dtc_size_vec_1.at(i)-tot_dtc_size_1);
     Hist_event_vs_dtc_tag_1->Fill(i,dtc_tag_vec_1.at(i));
-    Hist_dtc_event_size_2->Fill(dtc_size_vec_2.at(i));
-    Hist_residual_dtc_size_2->Fill(dtc_size_vec_2.at(i)-tot_dtc_size_2);
-    Hist_event_vs_dtc_size_2->Fill(i,dtc_size_vec_2.at(i)-tot_dtc_size_2);
-    Hist_event_vs_dtc_tag_2->Fill(i,dtc_tag_vec_2.at(i));
+  
 }
 for(int i=0;i<66;i++){
    Hist_roc_size_vs_line_number_roc_1->Fill(roc_size_vec_1.at(i),line_number_roc_vec_1.at(i));
@@ -199,26 +209,17 @@ for(int i=0;i<66;i++){
 
 TCanvas * c3 = new TCanvas("c3", "c3");
 Hist_num_events_1->Fill((double)num_events_1);
-Hist_num_events_2->Fill((double)num_events_2);
 Hist_num_events_1->SetLineColor(2);
-Hist_num_events_2->SetLineColor(4);
 Hist_num_events_1->SetFillStyle(3005);
-Hist_num_events_2->SetFillStyle(3004);
 Hist_num_events_1->SetFillColor(2);
-Hist_num_events_2->SetFillColor(4);
 Hist_num_events_1->Draw("");
-Hist_num_events_2->Draw("SAMES");
 c3->SaveAs("Hist_num_events.pdf");
 
 TCanvas * c1 = new TCanvas("c1", "c1");
 Hist_dtc_event_size_1->SetLineColor(2);
-Hist_dtc_event_size_2->SetLineColor(4);
 Hist_dtc_event_size_1->SetFillStyle(3005);
-Hist_dtc_event_size_2->SetFillStyle(3004);
 Hist_dtc_event_size_1->SetFillColor(2);
-Hist_dtc_event_size_2->SetFillColor(4);
 Hist_dtc_event_size_1->Draw();
-Hist_dtc_event_size_2->Draw("SAMES");
 
 c1->SaveAs("Hist_dtc_event_size.pdf");
 
@@ -234,9 +235,7 @@ Hist_line_number_dtc_2->Draw("SAMES");
 
 TCanvas * c4 = new TCanvas("c4", "c4");
 Hist_dtc_event_size_vs_line_number_dtc_1->SetLineColor(2);
-Hist_dtc_event_size_vs_line_number_dtc_2->SetLineColor(4);
 Hist_dtc_event_size_vs_line_number_dtc_1->Draw("BOX");
-Hist_dtc_event_size_vs_line_number_dtc_2->Draw("BOXSAMES");
 
 TCanvas * c5 = new TCanvas("c5", "c5");
 Hist_roc_size_1->SetLineColor(2);
@@ -293,13 +292,9 @@ Hist_dtc_size_vs_roc_size_2->Draw("BOXSAMES");
 
 TCanvas * c10 = new TCanvas("c10", "c10");
 Hist_dtc_tag_1->SetLineColor(2);
-Hist_dtc_tag_2->SetLineColor(4);
 Hist_dtc_tag_1->SetFillStyle(3005);
-Hist_dtc_tag_2->SetFillStyle(3004);
 Hist_dtc_tag_1->SetFillColor(2);
-Hist_dtc_tag_2->SetFillColor(4);
 Hist_dtc_tag_1->Draw();
-Hist_dtc_tag_2->Draw("SAMES");
 
 
 c7->SaveAs("Hist_NUM_ROCS.pdf");
@@ -309,16 +304,12 @@ c10->SaveAs("Hist_dtc_tag.pdf");
 
 TCanvas * c11 = new TCanvas("c11", "c11");
 Hist_residual_dtc_size_1->SetLineColor(2);
-Hist_residual_dtc_size_2->SetLineColor(4);
 Hist_residual_dtc_size_1->Draw();
-Hist_residual_dtc_size_2->Draw("SAMES");
 
 
 TCanvas * c12 = new TCanvas("c12","c12");
 Hist_event_vs_dtc_size_1->SetLineColor(2);
-Hist_event_vs_dtc_size_2->SetLineColor(4);
 Hist_event_vs_dtc_size_1->Draw("BOX");
-Hist_event_vs_dtc_size_2->Draw("BOXSAMES");
 
 
 
@@ -328,9 +319,7 @@ c12->SaveAs("Hist_event_vs_dtc_size.pdf");
 
 TCanvas * c13 = new TCanvas("c13","c13");
 Hist_event_vs_dtc_tag_1->SetLineColor(2);
-Hist_event_vs_dtc_tag_2->SetLineColor(4);
 Hist_event_vs_dtc_tag_1->Draw("BOX");
-Hist_event_vs_dtc_tag_2->Draw("BOXSAMES");
 
 TCanvas * c14 = new TCanvas("c14","c14");
 Hist_event_vs_roc_size_1->SetLineColor(2);
@@ -351,16 +340,11 @@ Hist_roc_size_vs_roc_status_1->Draw("BOX");
 Hist_roc_size_vs_roc_status_2->Draw("BOXSAMES");
 
 TCanvas * c17 = new TCanvas("c17","c17");
-TProfile* p_2=Hist_event_vs_dtc_size_2->ProfileX();
 TProfile* p_1=Hist_event_vs_dtc_size_1->ProfileX();
 p_1->SetFillStyle(3005);
-p_2->SetFillStyle(3004);
 p_1->SetFillColor(2);
-p_2->SetFillColor(4);
 p_1->SetLineColor(2);
-p_2->SetLineColor(4);
 p_1->Draw("");
-p_2->Draw("SAMES");
 
 
 TCanvas * c18 = new TCanvas("c18", "c18");
@@ -378,7 +362,6 @@ c18->SaveAs("Hist_roc_status.pdf");
 
 
 
-*/
 
   if (in.bad()) {
     std::cerr << "Error reading from file" << std::endl;
