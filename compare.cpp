@@ -30,7 +30,7 @@ void compare(){
         cerr << "impossible to open the file!" << endl;
         return;
     }
-    TH1F* Hist_dtc_event_size_9 = new TH1F(Form("Hist_dtc_event_size_%d",9),Form("Hist_dtc_event_size_%d",9), 70, 0.,70.);
+    TH1F* Hist_dtc_event_size_9 = new TH1F(Form("Hist_dtc_event_size_%d",9),Form("Hist_dtc_event_size_%d",9), 100, 0.,100.);
     TH1F* Hist_dtc_tag_9 = new TH1F(Form("Hist_dtc_tag_%d",9),Form("Hist_dtc_tag_%d",9), 70, 0.,70.);
     TH1F* Hist_residual_dtc_size_9 = new TH1F(Form("Hist_residual_dtc_size_%d",9),Form("Hist_residual_dtc_size_%d",9), 70, 0.,70.);
     TH2F* Hist_event_vs_dtc_size_9 = new TH2F(Form("Hist_event_vs_dtc_size_%d",9),Form("Hist_event_vs_dtc_size_%d",9), 70, 0.,70.,70, 0.,70.);
@@ -46,6 +46,8 @@ void compare(){
     TH1F* Hist_NUM_ROCS_9 = new TH1F(Form("Hist_NUM_ROCS_%d",9),Form("Hist_NUM_ROCS_%d",9), 70, 0.,70.);
     TH2F* Hist_roc_size_vs_line_number_roc_9 = new TH2F(Form("Hist_roc_size_vs_line_number_roc_%d",9),Form("Hist_roc_size_vs_line_number_roc_%d",9), 70, 0.,70.,2000, 0.,2000.);
     TH2F* Hist_dtc_size_vs_roc_size_9 = new TH2F(Form("Hist_dtc_size_vs_roc_size_%d",9),Form("Hist_dtc_size_vs_roc_size_%d",9),70, 0.,70.,70, 0.,70.);
+    TH1F* Hist_roc_status_9 = new TH1F(Form("Hist_roc_status_%d",9),Form("Hist_roc_status_%d",9), 1000, 0.,1000.);
+    TH1F* Hist_roc_status_7 = new TH1F(Form("Hist_roc_status_%d",7),Form("Hist_roc_status_%d",7), 1000, 0.,1000.);
 
 
     TH1F* Hist_dtc_event_size_7 = new TH1F(Form("Hist_dtc_event_size_%d",9),Form("Hist_dtc_event_size_%d",7), 70, 0.,70.);
@@ -76,7 +78,7 @@ vector<int> dtc_size_vec_9;
 vector<int> dtc_tag_vec_9;
 vector<int> roc_size_vec_9;
 vector<float> roc_status_vec_9;
-
+vector<float> line_number_roc_vec_9;
 int lines_count_9=0;
 int line_number_dtc_9=0;
 int roc_size_9=-1;
@@ -87,6 +89,8 @@ int val_9=0;
 int tot_dtc_size_9=0;
 int tot_roc_size_9=0;
 int val_status_9=0;
+int roc_not_empty_9=0;
+
 while(!in9.eof()){
     if (loc_9 == 0){
        printf(" 0x%08x: ",k_9*2);
@@ -103,11 +107,11 @@ while(!in9.eof()){
         tot_dtc_size_9+=dtc_size_9;
         line_number_dtc_9=lines_count_9;
         num_events_9++;
-        Hist_dtc_event_size_9->Fill(dtc_size_9);
         Hist_line_number_dtc_9->Fill(line_number_dtc_9);
         Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
         val_9=1;
     }
+
     if(loc_9==2 and val_9==1){
         dtc_tag_vec_9.push_back(size_9);
         Hist_dtc_tag_9->Fill(size_9);
@@ -121,12 +125,17 @@ while(!in9.eof()){
         line_number_roc_9=lines_count_9;
         num_roc_9++;
         NUM_ROC_9++;
-        Hist_roc_size_9->Fill(roc_size_9);
-        Hist_line_number_roc_9->Fill(line_number_roc_9);
-        Hist_roc_size_vs_line_number_roc_9->Fill(roc_size_9,line_number_roc_9);
-        Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
+
     }
-    if(loc_9==6 & val_status_9==1){
+
+ 
+    if(loc_9==1 and val_status_9==1 and (hi_9%16)==1){
+        line_number_roc_vec_9.push_back(line_number_roc_9);
+        Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
+        roc_size_vec_9.push_back(roc_size_9);
+        roc_not_empty_9=1;
+    }
+    if(loc_9==6 & val_status_9==1 & roc_not_empty_9==1){
         roc_status_vec_9.push_back(size_9/4.);
         val_status_9=0;
     }
@@ -142,6 +151,8 @@ while(!in9.eof()){
     }
     if((line_number_roc_9+roc_size_9-1)==lines_count_9){
         roc_size_9=-1;
+        roc_not_empty_9=0;
+
     }
  
     k_9++;
@@ -163,7 +174,7 @@ vector<int> dtc_size_vec_7;
 vector<int> dtc_tag_vec_7;
 vector<int> roc_size_vec_7;
 vector<float> roc_status_vec_7;
-
+vector<float> line_number_roc_vec_7;
 int lines_count_7=0;
 int line_number_dtc_7=0;
 int roc_size_7=-1;
@@ -174,6 +185,7 @@ int val_7=0;
 int tot_dtc_size_7=0;
 int tot_roc_size_7=0;
 int val_status_7=0;
+int roc_not_empty_7=0;
 while(!in7.eof()){
     if (loc_7 == 0){
        printf(" 0x%08x: ",k_7*2);
@@ -190,7 +202,6 @@ while(!in7.eof()){
         tot_dtc_size_7+=dtc_size_7;
         line_number_dtc_7=lines_count_7;
         num_events_7++;
-        Hist_dtc_event_size_7->Fill(dtc_size_7);
         Hist_line_number_dtc_7->Fill(line_number_dtc_7);
         Hist_dtc_event_size_vs_line_number_dtc_7->Fill(dtc_size_7,line_number_dtc_7);
         val_7=1;
@@ -204,16 +215,17 @@ while(!in7.eof()){
         roc_size_7=size_7>>4;
         val_status_7=1;
         tot_roc_size_7+=roc_size_7;
-        roc_size_vec_7.push_back(roc_size_7);
         line_number_roc_7=lines_count_7;
         num_roc_7++;
         NUM_ROC_7++;
-        Hist_roc_size_7->Fill(roc_size_7);
-        Hist_line_number_roc_7->Fill(line_number_roc_7);
-        Hist_roc_size_vs_line_number_roc_7->Fill(roc_size_7,line_number_roc_7);
-        Hist_dtc_size_vs_roc_size_7->Fill(dtc_size_7,roc_size_7);
     }
-    if(loc_7==6 & val_status_7==1){
+      if(loc_7==1 and val_status_7==1 and (hi_7%16)==1){
+        line_number_roc_vec_7.push_back(line_number_roc_7);
+        Hist_dtc_size_vs_roc_size_7->Fill(dtc_size_7,roc_size_7);
+        roc_size_vec_7.push_back(roc_size_7);
+        roc_not_empty_7=1;
+    }
+    if(loc_7==6 & val_status_7==1 & roc_not_empty_7==1){
         roc_status_vec_7.push_back(size_7/4.);
         val_status_7=0;
     }
@@ -229,6 +241,7 @@ while(!in7.eof()){
     }
     if((line_number_roc_7+roc_size_7-1)==lines_count_7){
         roc_size_7=-1;
+        roc_not_empty_7=0;
     }
 
     k_7++;
@@ -239,10 +252,38 @@ printf("TOTAL NUMBER OF EVENTS %d\n",num_events_7);
 printf("TOTAL NUMBER OF ROCS %d\n",num_roc_7);
 
 
+tot_dtc_size_9/=66;
+tot_roc_size_9/=(66*6);
+tot_dtc_size_7/=66;
+tot_roc_size_7/=(66*6);
 
 
-
-
+for(int i=0;i<66;i++){
+    Hist_dtc_event_size_9->Fill(dtc_size_vec_9.at(i));
+    Hist_residual_dtc_size_9->Fill(dtc_size_vec_9.at(i)-tot_dtc_size_9);
+    Hist_event_vs_dtc_size_9->Fill(i,dtc_size_vec_9.at(i)-tot_dtc_size_9);
+    Hist_event_vs_dtc_tag_9->Fill(i,dtc_tag_vec_9.at(i));
+    Hist_dtc_event_size_7->Fill(dtc_size_vec_7.at(i));
+    Hist_residual_dtc_size_7->Fill(dtc_size_vec_7.at(i)-tot_dtc_size_7);
+    Hist_event_vs_dtc_size_7->Fill(i,dtc_size_vec_7.at(i)-tot_dtc_size_7);
+    Hist_event_vs_dtc_tag_7->Fill(i,dtc_tag_vec_7.at(i));
+}
+for(int i=0;i<66;i++){
+   Hist_roc_size_vs_line_number_roc_9->Fill(roc_size_vec_9.at(i),line_number_roc_vec_9.at(i));
+   Hist_roc_size_vs_line_number_roc_7->Fill(roc_size_vec_7.at(i),line_number_roc_vec_7.at(i));
+   Hist_line_number_roc_9->Fill(line_number_roc_vec_9.at(i));
+   Hist_line_number_roc_7->Fill(line_number_roc_vec_7.at(i));
+   Hist_roc_size_9->Fill(roc_size_vec_9.at(i));
+   Hist_event_vs_roc_size_9->Fill(i,roc_size_vec_9.at(i));
+   Hist_roc_status_9->Fill(roc_status_vec_9.at(i));
+   Hist_roc_status_7->Fill(roc_status_vec_7.at(i));
+   Hist_event_vs_roc_status_9->Fill(i,roc_status_vec_9.at(i));
+   Hist_roc_size_vs_roc_status_9->Fill(roc_size_vec_9.at(i),roc_status_vec_9.at(i));
+   Hist_roc_size_7->Fill(roc_size_vec_7.at(i));
+   Hist_event_vs_roc_size_7->Fill(i,roc_size_vec_7.at(i));
+   Hist_event_vs_roc_status_7->Fill(i,roc_status_vec_7.at(i));
+   Hist_roc_size_vs_roc_status_7->Fill(roc_size_vec_7.at(i),roc_status_vec_7.at(i));
+}
 
 
 TCanvas * c3 = new TCanvas("c3", "c3");
@@ -293,8 +334,11 @@ Hist_roc_size_9->SetFillStyle(3005);
 Hist_roc_size_7->SetFillStyle(3004);
 Hist_roc_size_9->SetFillColor(2);
 Hist_roc_size_7->SetFillColor(4);
+Hist_roc_size_9->GetXaxis()->SetRangeUser(1,70);
+Hist_roc_size_7->GetXaxis()->SetRangeUser(1,70);
 Hist_roc_size_9->Draw();
 Hist_roc_size_7->Draw("SAMES");
+
 
 TCanvas * c6 = new TCanvas("c6", "c6");
 Hist_line_number_roc_9->SetLineColor(2);
@@ -346,32 +390,11 @@ Hist_dtc_tag_7->SetFillColor(4);
 Hist_dtc_tag_9->Draw();
 Hist_dtc_tag_7->Draw("SAMES");
 
-tot_dtc_size_9/=66;
-tot_roc_size_9/=(66*6);
-tot_dtc_size_7/=66;
-tot_roc_size_7/=(66*6);
 
 c7->SaveAs("Hist_NUM_ROCS.pdf");
 c8->SaveAs("Hist_roc_size_vs_line_number_roc.pdf");
 c9->SaveAs("Hist_dtc_size_vs_roc_size.pdf");
 c10->SaveAs("Hist_dtc_tag.pdf");
-
-for(int i=0;i<66;i++){
-    Hist_residual_dtc_size_9->Fill(dtc_size_vec_9.at(i)-tot_dtc_size_9);
-    Hist_event_vs_dtc_size_9->Fill(i,dtc_size_vec_9.at(i)-tot_dtc_size_9);
-    Hist_event_vs_dtc_tag_9->Fill(i,dtc_tag_vec_9.at(i));
-    Hist_residual_dtc_size_7->Fill(dtc_size_vec_7.at(i)-tot_dtc_size_7);
-    Hist_event_vs_dtc_size_7->Fill(i,dtc_size_vec_7.at(i)-tot_dtc_size_7);
-    Hist_event_vs_dtc_tag_7->Fill(i,dtc_tag_vec_7.at(i));
-}
-for(int i=0;i<66*6;i++){
-   Hist_event_vs_roc_size_9->Fill(i,roc_size_vec_9.at(i));
-   Hist_event_vs_roc_status_9->Fill(i,roc_status_vec_9.at(i));
-   Hist_roc_size_vs_roc_status_9->Fill(roc_size_vec_9.at(i),roc_status_vec_9.at(i));
-   Hist_event_vs_roc_size_7->Fill(i,roc_size_vec_7.at(i));
-   Hist_event_vs_roc_status_7->Fill(i,roc_status_vec_7.at(i));
-   Hist_roc_size_vs_roc_status_7->Fill(roc_size_vec_7.at(i),roc_status_vec_7.at(i));
-}
 
 TCanvas * c11 = new TCanvas("c11", "c11");
 Hist_residual_dtc_size_9->SetLineColor(2);
@@ -429,13 +452,18 @@ p_9->Draw("");
 p_7->Draw("SAMES");
 
 
-
+TCanvas * c18 = new TCanvas("c18", "c18");
+Hist_roc_status_9->SetLineColor(2);
+Hist_roc_status_7->SetLineColor(4);
+Hist_roc_status_9->Draw();
+Hist_roc_status_7->Draw("SAMES");
 
 c13->SaveAs("Hist_event_vs_dtc_tag.pdf");
 c14->SaveAs("Hist_event_vs_roc_size.pdf");
 c15->SaveAs("Hist_event_vs_roc_status.pdf");
 c16->SaveAs("Hist_roc_size_vs_roc_status.pdf");
 c17->SaveAs("Hist_event_vs_dtc.pdf");
+c18->SaveAs("Hist_roc_status.pdf");
 
 
 
