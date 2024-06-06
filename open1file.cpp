@@ -8,7 +8,7 @@
 using namespace std;
 
 
-void compare(){
+void open1file(){
     ifstream in9("emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
 
  
