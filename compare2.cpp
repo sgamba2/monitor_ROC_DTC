@@ -90,8 +90,29 @@ int tot_dtc_size_9=0;
 int tot_roc_size_9=0;
 int val_status_9=0;
 int roc_not_empty_9=0;
-
-while(!in9.eof() and k_9<200 ){
+int k_7=0;
+unsigned char lo_7;
+int loc_7 = 0;
+unsigned char hi_7;
+int num_events_7=0;
+int dtc_size_7=-1;
+vector<int> dtc_size_vec_7;
+vector<int> dtc_tag_vec_7;
+vector<int> roc_size_vec_7;
+vector<float> roc_status_vec_7;
+vector<float> line_number_roc_vec_7;
+int lines_count_7=0;
+int line_number_dtc_7=0;
+int roc_size_7=-1;
+int line_number_roc_7=0;
+int num_roc_7=0;
+int NUM_ROC_7=0;
+int val_7=0;
+int tot_dtc_size_7=0;
+int tot_roc_size_7=0;
+int val_status_7=0;
+int roc_not_empty_7=0;
+while(!in9.eof()){
     if (loc_9 == 0){
        printf(" 0x%08x: ",k_9*2);
        lines_count_9++;
@@ -103,15 +124,22 @@ while(!in9.eof() and k_9<200 ){
 
     if(loc_9==0 & dtc_size_9==-1){
         dtc_size_9=size_9>>4;
-        dtc_size_vec_9.push_back(dtc_size_9);
-        tot_dtc_size_9+=dtc_size_9;
+        
         line_number_dtc_9=lines_count_9;
         num_events_9++;
         Hist_line_number_dtc_9->Fill(line_number_dtc_9);
         Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
         val_9=1;
     }
-
+    if(loc== and val_9==1){  //trova dtc
+    if(dtc_id==){
+            dtc_size_vec_9.push_back(dtc_size_9);
+            tot_dtc_size_9+=dtc_size_9;
+    }
+    if(dtc_id){
+        
+    }
+    }
     if(loc_9==2 and val_9==1){
         dtc_tag_vec_9.push_back(size_9);
         Hist_dtc_tag_9->Fill(size_9);
@@ -164,29 +192,8 @@ printf("TOTAL NUMBER OF ROCS %d\n",num_roc_9);
 
 
 
-int k_7=0;
-unsigned char lo_7;
-int loc_7 = 0;
-unsigned char hi_7;
-int num_events_7=0;
-int dtc_size_7=-1;
-vector<int> dtc_size_vec_7;
-vector<int> dtc_tag_vec_7;
-vector<int> roc_size_vec_7;
-vector<float> roc_status_vec_7;
-vector<float> line_number_roc_vec_7;
-int lines_count_7=0;
-int line_number_dtc_7=0;
-int roc_size_7=-1;
-int line_number_roc_7=0;
-int num_roc_7=0;
-int NUM_ROC_7=0;
-int val_7=0;
-int tot_dtc_size_7=0;
-int tot_roc_size_7=0;
-int val_status_7=0;
-int roc_not_empty_7=0;
-while(!in7.eof() and k_7<200){
+
+while(!in7.eof()){
     if (loc_7 == 0){
        printf(" 0x%08x: ",k_7*2);
        lines_count_7++;
@@ -478,5 +485,3 @@ c18->SaveAs("Hist_roc_status.pdf");
   in9.close(); 
     return;
 }
-
-
