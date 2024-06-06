@@ -184,14 +184,14 @@ tot_roc_size_1/=((num_events-1)*6);
 tot_roc_size_2/=((num_events-1)*6);
 
 
-for(int i=0;i<66;i++){
+for(int i=0;i<num_events;i++){
     Hist_dtc_event_size->Fill(dtc_size_vec.at(i));
     Hist_residual_dtc_size->Fill(dtc_size_vec.at(i)-tot_dtc_size);
     Hist_event_vs_dtc_size->Fill(i,dtc_size_vec.at(i)-tot_dtc_size);
     Hist_event_vs_dtc_tag->Fill(i,dtc_tag_vec.at(i));
   
 }
-for(int i=0;i<66;i++){
+for(int i=0;i<num_events;i++){
    Hist_roc_size_vs_line_number_roc_1->Fill(roc_size_vec_1.at(i),line_number_roc_vec_1.at(i));
    Hist_roc_size_vs_line_number_roc_2->Fill(roc_size_vec_2.at(i),line_number_roc_vec_2.at(i));
    Hist_line_number_roc_1->Fill(line_number_roc_vec_1.at(i));
