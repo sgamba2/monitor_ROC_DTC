@@ -193,7 +193,7 @@ int tot_dtc_size_7=0;
 int tot_roc_size_7=0;
 int val_status_7=0;
 int roc_not_empty_7=0;
-while(!in7.eof()){
+ while(!in7.eof() ){
     if (loc_7 == 0){
        printf(" 0x%08x: ",k_7*2);
        lines_count_7++;
@@ -232,7 +232,7 @@ while(!in7.eof()){
     }
 
  
-    if(loc_7==1 and val_status_7==1 and (hi_7%16)==0 and val_7==0 and lines_count_7>line_number_dtc_7+2){
+    if(loc_7==1 and val_status_7==1 and (hi_7%16)==1 and val_7==0 and lines_count_7>line_number_dtc_7+2){
         line_number_roc_vec_7.push_back(line_number_roc_7);
         Hist_dtc_size_vs_roc_size_7->Fill(dtc_size_7,roc_size_7);
         roc_size_vec_7.push_back(roc_size_7);
