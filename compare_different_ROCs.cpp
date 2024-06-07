@@ -9,7 +9,7 @@ using namespace std;
 
 
 void compare_different_ROCs(){
-  string file("mu2edaq09_dtc1_run_066.dat"); //"/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat"
+  string file("/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat"); //"/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat"
     ifstream in(file, std::ios::binary );
 
  
@@ -36,7 +36,7 @@ void compare_different_ROCs(){
     TH2F* Hist_roc_size_vs_roc_status_1 = new TH2F(Form("Hist_roc_size_vs_roc_status_%d",1),Form("Hist_roc_size_vs_roc_status_%d",1), 70, 0.,70.,400, 0.,400.);
     TH1F* Hist_line_number_roc_1 = new TH1F(Form("Hist_line_number_roc_%d",1),Form("Hist_line_number_roc_%d",1), 2000, 0.,2000.);
     TH1F* Hist_roc_size_1 = new TH1F(Form("Hist_roc_size_%d",1),Form("Hist_roc_size_%d",1), 70, 0.,70.);
-    TH1F* Hist_NUM_ROCS_1 = new TH1F(Form("Hist_NUM_ROCS_%d",1),Form("Hist_NUM_ROCS_%d",1), 70, 0.,70.);
+   
     TH2F* Hist_roc_size_vs_line_number_roc_1 = new TH2F(Form("Hist_roc_size_vs_line_number_roc_%d",1),Form("Hist_roc_size_vs_line_number_roc_%d",1), 70, 0.,70.,2000, 0.,2000.);
     TH2F* Hist_dtc_size_vs_roc_size_1 = new TH2F(Form("Hist_dtc_size_vs_roc_size_%d",1),Form("Hist_dtc_size_vs_roc_size_%d",1),70, 0.,70.,70, 0.,70.);
     TH1F* Hist_roc_status_1 = new TH1F(Form("Hist_roc_status_%d",1),Form("Hist_roc_status_%d",1), 1000, 0.,1000.);
@@ -49,7 +49,7 @@ void compare_different_ROCs(){
     TH1F* Hist_num_events_2 = new TH1F(Form("Hist_num_events_%d",2),Form("Hist_num_events_%d",2), 70, 0.,70.);
     TH1F* Hist_line_number_roc_2 = new TH1F(Form("Hist_line_number_roc_%d",2),Form("Hist_line_number_roc_%d",2), 2000, 0.,2000.);
     TH1F* Hist_roc_size_2 = new TH1F(Form("Hist_roc_size_%d",2),Form("Hist_roc_size_%d",2), 70, 0.,70.);
-    TH1F* Hist_NUM_ROCS_2 = new TH1F(Form("Hist_NUM_ROCS_%d",2),Form("Hist_NUM_ROCS_%d",2), 70, 0.,70.);
+
     TH2F* Hist_roc_size_vs_line_number_roc_2 = new TH2F(Form("Hist_roc_size_vs_line_number_roc_%d",2),Form("Hist_roc_size_vs_line_number_roc_%d",2), 70, 0.,70.,2000, 0.,2000.);
     TH2F* Hist_dtc_size_vs_roc_size_2 = new TH2F(Form("Hist_dtc_size_vs_roc_size_%d",2),Form("Hist_dtc_size_vs_roc_size_%d",2),70, 0.,70.,70, 0.,70.);
     TH1F* Hist_roc_status_2 = new TH1F(Form("Hist_roc_status_%d",2),Form("Hist_roc_status_%d",2), 1000, 0.,1000.);
@@ -263,8 +263,8 @@ printf("TOTAL NUMBER OF ROCS1 %d\n",num_roc_1);
 
 
 tot_dtc_size/=(num_events-1);
-tot_roc_size_1/=(NUM_ROC_1);
-tot_roc_size_2/=(NUM_ROC_2);
+tot_roc_size_1/=(size(roc_size_vec_1));
+tot_roc_size_2/=(size(roc_size_vec_2));
 
 
  for(int i=0;i<size(dtc_size_vec)-1;i++){
@@ -353,15 +353,6 @@ c5->SaveAs("Hist_roc_size.pdf");
 c6->SaveAs("Hist_line_number_roc.pdf");
 
 
-TCanvas * c7 = new TCanvas("c7", "c7");
-Hist_NUM_ROCS_1->SetLineColor(2);
-Hist_NUM_ROCS_2->SetLineColor(4);
-Hist_NUM_ROCS_1->SetFillStyle(3005);
-Hist_NUM_ROCS_2->SetFillStyle(3004);
-Hist_NUM_ROCS_1->SetFillColor(2);
-Hist_NUM_ROCS_2->SetFillColor(4);
-Hist_NUM_ROCS_1->Draw();
-Hist_NUM_ROCS_2->Draw("SAMES");
 
 TCanvas * c8 = new TCanvas("c8", "c8");
 Hist_roc_size_vs_line_number_roc_1->SetLineColor(2);
@@ -382,7 +373,6 @@ Hist_dtc_tag->SetFillColor(2);
 Hist_dtc_tag->Draw();
 
 
-c7->SaveAs("Hist_NUM_ROCS.pdf");
 c8->SaveAs("Hist_roc_size_vs_line_number_roc.pdf");
 c9->SaveAs("Hist_dtc_size_vs_roc_size.pdf");
 c10->SaveAs("Hist_dtc_tag.pdf");
@@ -447,13 +437,6 @@ c18->SaveAs("Hist_roc_status.pdf");
 
 
 
-TCanvas * c19 = new TCanvas("c19", "c19");
-    Hist_NUM_ROCS_2->Fill(NUM_ROC_2);
-             Hist_NUM_ROCS_1->Fill(NUM_ROC_1);
-Hist_NUM_ROCS_1->SetLineColor(2);
-  Hist_NUM_ROCS_2->SetLineColor(4);
-Hist_NUM_ROCS_1->Draw();
-  Hist_NUM_ROCS_2->Draw("SAMES");
 
   if (in2.bad()) {
     std::cerr << "Error reading from file" << std::endl;

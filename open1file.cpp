@@ -11,7 +11,7 @@ using namespace std;
 void open1file(){
     ifstream in9("/exp/mu2e/data/projects/tracker/vst/datasets/val/emulated_cf0_10000_mu2edaq09_0002.dat", std::ios::binary );
 
- 
+    gStyle->SetOptStat(1111111);
     if(!in9) {
       cout << "Cannot open file!" << endl;
       return;
@@ -63,8 +63,8 @@ int tot_dtc_size_9=0;
 int tot_roc_size_9=0;
 int val_status_9=0;
 int roc_not_empty_9=0;
-
-while(!in9.eof() and k_9<=100 ){
+ int AAAAA=-1;
+while(!in9.eof()){
     if (loc_9 == 0){
        printf(" 0x%08x: ",k_9*2);
        lines_count_9++;
@@ -83,6 +83,8 @@ while(!in9.eof() and k_9<=100 ){
         Hist_line_number_dtc_9->Fill(line_number_dtc_9);
         Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
         val_9=1;
+    printf("DTC ");
+
     }
 
     if(loc_9==2 and val_9==1){
@@ -94,7 +96,6 @@ while(!in9.eof() and k_9<=100 ){
         roc_size_9=size_9>>4;
         val_status_9=1;
         tot_roc_size_9+=roc_size_9;
-        roc_size_vec_9.push_back(roc_size_9);
         line_number_roc_9=lines_count_9;
         num_roc_9++;
         NUM_ROC_9++;
@@ -102,15 +103,22 @@ while(!in9.eof() and k_9<=100 ){
     }
 
  
-    if(loc_9==1 and val_status_9==1 and (hi_9%16)==1){
+    if(loc_9==1 and val_status_9==1 and (hi_9%16)==0 and val_9==0 and lines_count_9>line_number_dtc_9+2){
         line_number_roc_vec_9.push_back(line_number_roc_9);
         Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
         roc_size_vec_9.push_back(roc_size_9);
         roc_not_empty_9=1;
-    }
-    if(loc_9==6 & val_status_9==1 & roc_not_empty_9==1){
-        roc_status_vec_9.push_back(size_9/4.);
         val_status_9=0;
+
+    printf("ROC ");
+
+    }
+    if(loc_9==6  &  roc_not_empty_9==1  & lines_count_9>line_number_dtc_9+2 ){
+        roc_status_vec_9.push_back(size_9/4.);
+        roc_not_empty_9=0;
+
+    printf("ROC STATUS");
+
     }
     loc_9 += 1;
     if (loc_9 == 8) {
@@ -124,7 +132,6 @@ while(!in9.eof() and k_9<=100 ){
     }
     if((line_number_roc_9+roc_size_9-1)==lines_count_9){
         roc_size_9=-1;
-        roc_not_empty_9=0;
 
     }
  
@@ -136,21 +143,22 @@ printf("TOTAL NUMBER OF EVENTS %d\n",num_events_9);
 printf("TOTAL NUMBER OF ROCS %d\n",num_roc_9);
 
 
-
+printf("TOTAL NUMBER OF ROCS  status %d\n",size(roc_status_vec_9));
+printf("TOTAL NUMBER OF ROCS  size %d\n",size(roc_size_vec_9));
 
 tot_dtc_size_9/=66;
 tot_roc_size_9/=(66*6);
 
 
 
-for(int i=0;i<66;i++){
+ for(int i=0;i<size(dtc_size_vec_9)-1;i++){
     Hist_dtc_event_size_9->Fill(dtc_size_vec_9.at(i));
     Hist_residual_dtc_size_9->Fill(dtc_size_vec_9.at(i)-tot_dtc_size_9);
     Hist_event_vs_dtc_size_9->Fill(i,dtc_size_vec_9.at(i)-tot_dtc_size_9);
     Hist_event_vs_dtc_tag_9->Fill(i,dtc_tag_vec_9.at(i));
    
 }
-for(int i=0;i<66;i++){
+ for(int i=0;i<size(roc_status_vec_9);i++){
    Hist_roc_size_vs_line_number_roc_9->Fill(roc_size_vec_9.at(i),line_number_roc_vec_9.at(i));
    Hist_line_number_roc_9->Fill(line_number_roc_vec_9.at(i));
    Hist_roc_size_9->Fill(roc_size_vec_9.at(i));
