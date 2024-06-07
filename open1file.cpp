@@ -146,8 +146,8 @@ printf("TOTAL NUMBER OF ROCS %d\n",num_roc_9);
 printf("TOTAL NUMBER OF ROCS  status %d\n",size(roc_status_vec_9));
 printf("TOTAL NUMBER OF ROCS  size %d\n",size(roc_size_vec_9));
 
-tot_dtc_size_9/=66;
-tot_roc_size_9/=(66*6);
+tot_dtc_size_9/=(size(dtc_size_vec_9)-1);
+tot_roc_size_9/=(size(roc_status_vec_9));
 
 
 

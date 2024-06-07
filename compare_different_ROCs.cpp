@@ -60,84 +60,93 @@ int k_1=0;
 unsigned char lo_1;
 int loc_1 = 0;
 unsigned char hi_1;
-int num_events=0;
-int dtc_size=-1;
-vector<int> dtc_size_vec;
-vector<int> dtc_tag_vec;
+int num_events_1=0;
+int dtc_size_1=-1;
+vector<int> dtc_size_vec_1;
+vector<int> dtc_tag_vec_1;
 vector<int> roc_size_vec_1;
 vector<float> roc_status_vec_1;
 vector<float> line_number_roc_vec_1;
-int lines_count=0;
-int line_number_dtc=0;
+int lines_count_1=0;
+int line_number_dtc_1=0;
 int roc_size_1=-1;
 int line_number_roc_1=0;
 int num_roc_1=0;
 int NUM_ROC_1=0;
 int val_1=0;
-int tot_dtc_size=0;
+int tot_dtc_size_1=0;
 int tot_roc_size_1=0;
 int val_status_1=0;
 int roc_not_empty_1=0;
-
-while(!in.eof()  ){
+ int AAAAA=-1;
+while(!in.eof()){
     if (loc_1 == 0){
        printf(" 0x%08x: ",k_1*2);
-       lines_count++;
+       lines_count_1++;
     }
     in.read(reinterpret_cast<char*>(&lo_1), 1); 
     in.read(reinterpret_cast<char*>(&hi_1), 1);
     int size_1 = (hi_1 << 8) | lo_1;
     printf("0x%04x ",size_1);
 
-    if(loc_1==0 & dtc_size==-1){
-        dtc_size=size_1>>4;
-        dtc_size_vec.push_back(dtc_size);
-        tot_dtc_size+=dtc_size;
-        line_number_dtc=lines_count;
-        num_events++;
-        Hist_line_number_dtc->Fill(line_number_dtc);
-        Hist_dtc_event_size_vs_line_number_dtc->Fill(dtc_size,line_number_dtc);
+    if(loc_1==0 & dtc_size_1==-1){
+        dtc_size_1=size_1>>4;
+        dtc_size_vec_1.push_back(dtc_size_1);
+        tot_dtc_size_1+=dtc_size_1;
+        line_number_dtc_1=lines_count_1;
+        num_events_1++;
+        Hist_line_number_dtc_1->Fill(line_number_dtc_1);
+        Hist_dtc_event_size_vs_line_number_dtc_1->Fill(dtc_size_1,line_number_dtc_1);
         val_1=1;
+    printf("DTC ");
+
     }
 
     if(loc_1==2 and val_1==1){
-        dtc_tag_vec.push_back(size_1);
-        Hist_dtc_tag->Fill(size_1);
+        dtc_tag_vec_1.push_back(size_1);
+        Hist_dtc_tag_1->Fill(size_1);
         val_1=0;
     }
-    if(loc_1==0 & roc_size_1==-1 & lines_count>line_number_dtc+2){
+    if(loc_1==0 & roc_size_1==-1 & lines_count_1>line_number_dtc_1+2){
         roc_size_1=size_1>>4;
         val_status_1=1;
         tot_roc_size_1+=roc_size_1;
-        line_number_roc_1=lines_count;
+        line_number_roc_1=lines_count_1;
         num_roc_1++;
         NUM_ROC_1++;
 
     }
 
  
-    if(loc_1==1 and val_status_1==1 and (hi_1%16)==1){
+    if(loc_1==1 and val_status_1==1 and (hi_1%16)==0 and val_1==0 and lines_count_1>line_number_dtc_1+2){
         line_number_roc_vec_1.push_back(line_number_roc_1);
-        Hist_dtc_size_vs_roc_size_1->Fill(dtc_size,roc_size_1);
+        Hist_dtc_size_vs_roc_size_1->Fill(dtc_size_1,roc_size_1);
         roc_size_vec_1.push_back(roc_size_1);
         roc_not_empty_1=1;
-    }
-    if(loc_1==6 & val_status_1==1 & roc_not_empty_1==1){
-        roc_status_vec_1.push_back(size_1/4.);
         val_status_1=0;
+
+    printf("ROC ");
+
+    }
+    if(loc_1==6  &  roc_not_empty_1==1  & lines_count_1>line_number_dtc_1+2 ){
+        roc_status_vec_1.push_back(size_1/4.);
+        roc_not_empty_1=0;
+
+    printf("ROC STATUS");
+
     }
     loc_1 += 1;
     if (loc_1 == 8) {
         printf("\n");
         loc_1  = 0;
     }
-    if((line_number_dtc+dtc_size-1)==lines_count){
-        dtc_size=-1;
+    if((line_number_dtc_1+dtc_size_1-1)==lines_count_1){
+        dtc_size_1=-1;
+        Hist_NUM_ROCS_1->Fill(NUM_ROC_1);
         NUM_ROC_1=0;
     }
-    if((line_number_roc_1+roc_size_1-1)==lines_count){
+    if((line_number_roc_1+roc_size_1-1)==lines_count_1){
         roc_size_1=-1;
-        roc_not_empty_1=0;
 
     }
  
@@ -174,8 +183,8 @@ int tot_dtc_size_2=0;
 int tot_roc_size_2=0;
 int val_status_2=0;
 int roc_not_empty_2=0;
-
-while(!in2.eof() ){
+ int AAAAA=-1;
+while(!in2.eof()){
     if (loc_2 == 0){
        printf(" 0x%08x: ",k_2*2);
        lines_count_2++;
@@ -191,12 +200,16 @@ while(!in2.eof() ){
         tot_dtc_size_2+=dtc_size_2;
         line_number_dtc_2=lines_count_2;
         num_events_2++;
+        Hist_line_number_dtc_2->Fill(line_number_dtc_2);
+        Hist_dtc_event_size_vs_line_number_dtc_2->Fill(dtc_size_2,line_number_dtc_2);
         val_2=1;
+    printf("DTC ");
+
     }
 
     if(loc_2==2 and val_2==1){
         dtc_tag_vec_2.push_back(size_2);
-
+        Hist_dtc_tag_2->Fill(size_2);
         val_2=0;
     }
     if(loc_2==0 & roc_size_2==-1 & lines_count_2>line_number_dtc_2+2){
@@ -210,15 +223,22 @@ while(!in2.eof() ){
     }
 
  
-    if(loc_2==1 and val_status_2==1 and (hi_2%16)==0){
+    if(loc_2==1 and val_status_2==1 and (hi_2%16)==0 and val_2==0 and lines_count_2>line_number_dtc_2+2){
         line_number_roc_vec_2.push_back(line_number_roc_2);
         Hist_dtc_size_vs_roc_size_2->Fill(dtc_size_2,roc_size_2);
         roc_size_vec_2.push_back(roc_size_2);
         roc_not_empty_2=1;
-    }
-    if(loc_2==6 & val_status_2==1 & roc_not_empty_2==1){
-        roc_status_vec_2.push_back(size_2/4.);
         val_status_2=0;
+
+    printf("ROC ");
+
+    }
+    if(loc_2==6  &  roc_not_empty_2==1  & lines_count_2>line_number_dtc_2+2 ){
+        roc_status_vec_2.push_back(size_2/4.);
+        roc_not_empty_2=0;
+
+    printf("ROC STATUS");
+
     }
     loc_2 += 1;
     if (loc_2 == 8) {
@@ -227,17 +247,16 @@ while(!in2.eof() ){
     }
     if((line_number_dtc_2+dtc_size_2-1)==lines_count_2){
         dtc_size_2=-1;
+        Hist_NUM_ROCS_2->Fill(NUM_ROC_2);
         NUM_ROC_2=0;
     }
     if((line_number_roc_2+roc_size_2-1)==lines_count_2){
         roc_size_2=-1;
-        roc_not_empty_2=0;
 
     }
  
     k_2++;
 }
-
 
 
 

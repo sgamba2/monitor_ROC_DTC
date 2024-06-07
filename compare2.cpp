@@ -8,7 +8,7 @@
 using namespace std;
 
 
-void compare(){
+void compare2(){
     ifstream in7("mu2edaq07_dtc1_run_066.dat", std::ios::binary );
     ifstream in9("mu2edaq09_dtc1_run_066.dat", std::ios::binary );
 
@@ -90,6 +90,87 @@ int tot_dtc_size_9=0;
 int tot_roc_size_9=0;
 int val_status_9=0;
 int roc_not_empty_9=0;
+while(!in9.eof()){
+    if (loc_9 == 0){
+       printf(" 0x%08x: ",k_9*2);
+       lines_count_9++;
+    }
+    in9.read(reinterpret_cast<char*>(&lo_9), 1); 
+    in9.read(reinterpret_cast<char*>(&hi_9), 1);
+    int size_9 = (hi_9 << 8) | lo_9;
+    printf("0x%04x ",size_9);
+
+    if(loc_9==0 & dtc_size_9==-1){
+        dtc_size_9=size_9>>4;
+        dtc_size_vec_9.push_back(dtc_size_9);
+        tot_dtc_size_9+=dtc_size_9;
+        line_number_dtc_9=lines_count_9;
+        num_events_9++;
+        Hist_line_number_dtc_9->Fill(line_number_dtc_9);
+        Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
+        val_9=1;
+    printf("DTC ");
+
+    }
+
+    if(loc_9==2 and val_9==1){
+        dtc_tag_vec_9.push_back(size_9);
+        Hist_dtc_tag_9->Fill(size_9);
+        val_9=0;
+    }
+    if(loc_9==0 & roc_size_9==-1 & lines_count_9>line_number_dtc_9+2){
+        roc_size_9=size_9>>4;
+        val_status_9=1;
+        tot_roc_size_9+=roc_size_9;
+        line_number_roc_9=lines_count_9;
+        num_roc_9++;
+        NUM_ROC_9++;
+
+    }
+
+ 
+    if(loc_9==1 and val_status_9==1 and (hi_9%16)==0 and val_9==0 and lines_count_9>line_number_dtc_9+2){
+        line_number_roc_vec_9.push_back(line_number_roc_9);
+        Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
+        roc_size_vec_9.push_back(roc_size_9);
+        roc_not_empty_9=1;
+        val_status_9=0;
+
+    printf("ROC ");
+
+    }
+    if(loc_9==6  &  roc_not_empty_9==1  & lines_count_9>line_number_dtc_9+2 ){
+        roc_status_vec_9.push_back(size_9/4.);
+        roc_not_empty_9=0;
+
+    printf("ROC STATUS");
+
+    }
+    loc_9 += 1;
+    if (loc_9 == 8) {
+        printf("\n");
+        loc_9  = 0;
+    }
+    if((line_number_dtc_9+dtc_size_9-1)==lines_count_9){
+        dtc_size_9=-1;
+        Hist_NUM_ROCS_9->Fill(NUM_ROC_9);
+        NUM_ROC_9=0;
+    }
+    if((line_number_roc_9+roc_size_9-1)==lines_count_9){
+        roc_size_9=-1;
+
+    }
+ 
+    k_9++;
+}
+printf("\n");
+printf("TOTAL NUMBER OF LINES %d\n",lines_count_9);
+printf("TOTAL NUMBER OF EVENTS %d\n",num_events_9);
+printf("TOTAL NUMBER OF ROCS %d\n",num_roc_9);
+
+
+
+
 int k_7=0;
 unsigned char lo_7;
 int loc_7 = 0;
@@ -112,87 +193,6 @@ int tot_dtc_size_7=0;
 int tot_roc_size_7=0;
 int val_status_7=0;
 int roc_not_empty_7=0;
-while(!in9.eof()){
-    if (loc_9 == 0){
-       printf(" 0x%08x: ",k_9*2);
-       lines_count_9++;
-    }
-    in9.read(reinterpret_cast<char*>(&lo_9), 1); 
-    in9.read(reinterpret_cast<char*>(&hi_9), 1);
-    int size_9 = (hi_9 << 8) | lo_9;
-    printf("0x%04x ",size_9);
-
-    if(loc_9==0 & dtc_size_9==-1){
-        dtc_size_9=size_9>>4;
-        
-        line_number_dtc_9=lines_count_9;
-        num_events_9++;
-        Hist_line_number_dtc_9->Fill(line_number_dtc_9);
-        Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
-        val_9=1;
-    }
-    if(loc== and val_9==1){  //trova dtc
-    if(dtc_id==){
-            dtc_size_vec_9.push_back(dtc_size_9);
-            tot_dtc_size_9+=dtc_size_9;
-    }
-    if(dtc_id){
-        
-    }
-    }
-    if(loc_9==2 and val_9==1){
-        dtc_tag_vec_9.push_back(size_9);
-        Hist_dtc_tag_9->Fill(size_9);
-        val_9=0;
-    }
-    if(loc_9==0 & roc_size_9==-1 & lines_count_9>line_number_dtc_9+2){
-        roc_size_9=size_9>>4;
-        val_status_9=1;
-        tot_roc_size_9+=roc_size_9;
-        roc_size_vec_9.push_back(roc_size_9);
-        line_number_roc_9=lines_count_9;
-        num_roc_9++;
-        NUM_ROC_9++;
-
-    }
-
- 
-    if(loc_9==1 and val_status_9==1 and (hi_9%16)==1){
-        line_number_roc_vec_9.push_back(line_number_roc_9);
-        Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
-        roc_size_vec_9.push_back(roc_size_9);
-        roc_not_empty_9=1;
-    }
-    if(loc_9==6 & val_status_9==1 & roc_not_empty_9==1){
-        roc_status_vec_9.push_back(size_9/4.);
-        val_status_9=0;
-    }
-    loc_9 += 1;
-    if (loc_9 == 8) {
-        printf("\n");
-        loc_9  = 0;
-    }
-    if((line_number_dtc_9+dtc_size_9-1)==lines_count_9){
-        dtc_size_9=-1;
-        Hist_NUM_ROCS_9->Fill(NUM_ROC_9);
-        NUM_ROC_9=0;
-    }
-    if((line_number_roc_9+roc_size_9-1)==lines_count_9){
-        roc_size_9=-1;
-        roc_not_empty_9=0;
-
-    }
- 
-    k_9++;
-}
-printf("\n");
-printf("TOTAL NUMBER OF LINES %d\n",lines_count_9);
-printf("TOTAL NUMBER OF EVENTS %d\n",num_events_9);
-printf("TOTAL NUMBER OF ROCS %d\n",num_roc_9);
-
-
-
-
 while(!in7.eof()){
     if (loc_7 == 0){
        printf(" 0x%08x: ",k_7*2);
@@ -212,7 +212,10 @@ while(!in7.eof()){
         Hist_line_number_dtc_7->Fill(line_number_dtc_7);
         Hist_dtc_event_size_vs_line_number_dtc_7->Fill(dtc_size_7,line_number_dtc_7);
         val_7=1;
+    printf("DTC ");
+
     }
+
     if(loc_7==2 and val_7==1){
         dtc_tag_vec_7.push_back(size_7);
         Hist_dtc_tag_7->Fill(size_7);
@@ -225,16 +228,26 @@ while(!in7.eof()){
         line_number_roc_7=lines_count_7;
         num_roc_7++;
         NUM_ROC_7++;
+
     }
-      if(loc_7==1 and val_status_7==1 and (hi_7%16)==1){
+
+ 
+    if(loc_7==1 and val_status_7==1 and (hi_7%16)==0 and val_7==0 and lines_count_7>line_number_dtc_7+2){
         line_number_roc_vec_7.push_back(line_number_roc_7);
         Hist_dtc_size_vs_roc_size_7->Fill(dtc_size_7,roc_size_7);
         roc_size_vec_7.push_back(roc_size_7);
         roc_not_empty_7=1;
-    }
-    if(loc_7==6 & val_status_7==1 & roc_not_empty_7==1){
-        roc_status_vec_7.push_back(size_7/4.);
         val_status_7=0;
+
+    printf("ROC ");
+
+    }
+    if(loc_7==6  &  roc_not_empty_7==1  & lines_count_7>line_number_dtc_7+2 ){
+        roc_status_vec_7.push_back(size_7/4.);
+        roc_not_empty_7=0;
+
+    printf("ROC STATUS");
+
     }
     loc_7 += 1;
     if (loc_7 == 8) {
@@ -248,9 +261,9 @@ while(!in7.eof()){
     }
     if((line_number_roc_7+roc_size_7-1)==lines_count_7){
         roc_size_7=-1;
-        roc_not_empty_7=0;
-    }
 
+    }
+ 
     k_7++;
 }
 printf("\n");
@@ -259,40 +272,43 @@ printf("TOTAL NUMBER OF EVENTS %d\n",num_events_7);
 printf("TOTAL NUMBER OF ROCS %d\n",num_roc_7);
 
 
-tot_dtc_size_9/=66;
-tot_roc_size_9/=(66*6);
-tot_dtc_size_7/=66;
-tot_roc_size_7/=(66*6);
+tot_dtc_size_9/=(size(dtc_size_vec_9)-1);
+tot_roc_size_9/=(size(roc_size_vec_9));
+tot_dtc_size_7/=(size(dtc_size_vec_7)-1);
+tot_roc_size_7/=(size(roc_size_vec_7));
 
 
-for(int i=0;i<66;i++){
+for(int i=0;i<size(dtc_size_vec_9)-1;i++){
     Hist_dtc_event_size_9->Fill(dtc_size_vec_9.at(i));
     Hist_residual_dtc_size_9->Fill(dtc_size_vec_9.at(i)-tot_dtc_size_9);
     Hist_event_vs_dtc_size_9->Fill(i,dtc_size_vec_9.at(i)-tot_dtc_size_9);
     Hist_event_vs_dtc_tag_9->Fill(i,dtc_tag_vec_9.at(i));
+}
+for(int i=0;i<size(dtc_size_vec_7)-1;i++){
     Hist_dtc_event_size_7->Fill(dtc_size_vec_7.at(i));
     Hist_residual_dtc_size_7->Fill(dtc_size_vec_7.at(i)-tot_dtc_size_7);
     Hist_event_vs_dtc_size_7->Fill(i,dtc_size_vec_7.at(i)-tot_dtc_size_7);
     Hist_event_vs_dtc_tag_7->Fill(i,dtc_tag_vec_7.at(i));
 }
-for(int i=0;i<66;i++){
+for(int i=0;i<size(roc_size_vec_9);i++){
    Hist_roc_size_vs_line_number_roc_9->Fill(roc_size_vec_9.at(i),line_number_roc_vec_9.at(i));
-   Hist_roc_size_vs_line_number_roc_7->Fill(roc_size_vec_7.at(i),line_number_roc_vec_7.at(i));
    Hist_line_number_roc_9->Fill(line_number_roc_vec_9.at(i));
-   Hist_line_number_roc_7->Fill(line_number_roc_vec_7.at(i));
    Hist_roc_size_9->Fill(roc_size_vec_9.at(i));
    Hist_event_vs_roc_size_9->Fill(i,roc_size_vec_9.at(i));
    Hist_roc_status_9->Fill(roc_status_vec_9.at(i));
-   Hist_roc_status_7->Fill(roc_status_vec_7.at(i));
    Hist_event_vs_roc_status_9->Fill(i,roc_status_vec_9.at(i));
    Hist_roc_size_vs_roc_status_9->Fill(roc_size_vec_9.at(i),roc_status_vec_9.at(i));
+  
+}
+for(int i=0;i<size(roc_size_vec_7);i++){
+   Hist_roc_size_vs_line_number_roc_7->Fill(roc_size_vec_7.at(i),line_number_roc_vec_7.at(i));
+   Hist_line_number_roc_7->Fill(line_number_roc_vec_7.at(i));
+   Hist_roc_status_7->Fill(roc_status_vec_7.at(i));
    Hist_roc_size_7->Fill(roc_size_vec_7.at(i));
    Hist_event_vs_roc_size_7->Fill(i,roc_size_vec_7.at(i));
    Hist_event_vs_roc_status_7->Fill(i,roc_status_vec_7.at(i));
    Hist_roc_size_vs_roc_status_7->Fill(roc_size_vec_7.at(i),roc_status_vec_7.at(i));
 }
-
-
 TCanvas * c3 = new TCanvas("c3", "c3");
 Hist_num_events_9->Fill((double)num_events_9);
 Hist_num_events_7->Fill((double)num_events_7);
