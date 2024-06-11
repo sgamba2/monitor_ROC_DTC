@@ -1,0 +1,18 @@
+
+  \begin{tikzpicture}
+    \node[anchor=south west,inner sep=0] at (0,0) {
+      % \node[shift={(0 cm,0.cm)},inner sep=0,rotate={90}] at (0,0) {}
+      \makebox[\textwidth][c] {
+        \includegraphics[width=0.1\textwidth]{figures/png/mu2e_logo_oval.png}
+      }
+    };
+    % \node [text width=6cm, scale=1.0] at (4.5,6.4) {mu2e-18894 by Kevin Lynch and Jim Popp};
+  \end{tikzpicture}
+
+  \begin{itemize} \fontseries{s} \fontsize{8}{10} \selectfont
+  \item
+    predict counting rates in different configurations
+  \item
+    learn about the energy resolution of the Am241 source
+  \end{itemize}
+

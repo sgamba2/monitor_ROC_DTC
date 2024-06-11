@@ -1,0 +1,604 @@
+% -*- mode:latex; mode:flyspell -*-
+\documentclass{beamer}[10pt]
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% In principle, this file can be redistributed and/or modified under
+% the terms of the GNU Public License, version 2.
+%
+% However, this file is supposed to be a template to be modified
+% for your own needs. For this reason, if you use this file as a
+% template and not specifically distribute it as part of a another
+% package/program, I grant the extra permission to freely copy and
+% modify this file as you see fit and even to delete this copyright
+% notice. 
+
+\mode<presentation> {
+  % \usetheme{Warsaw}
+  \usetheme{Madrid}
+%  \usetheme{Darmstadt}
+%  \usetheme{Berkeley}
+  % or ...
+
+%  \setbeamercovered{transparent}
+  % or whatever (possibly just delete it)
+}
+
+\usepackage[english]{babel}
+% or whatever
+
+\usepackage[latin1]{inputenc}
+% or whatever
+
+\usepackage{hyperref}
+\usepackage{cancel}
+\usepackage{tikz}
+\usetikzlibrary{arrows}
+\usetikzlibrary{decorations.markings}
+\usetikzlibrary{decorations.pathmorphing}
+% \usepackage[absolute,overlay]{textpos}
+% \usepackage{onimage}
+\usepackage{times}
+\usepackage{graphics}
+% \usepackage{subfigure}
+% \usepackage{scalefnt}
+%\usepackage{hyperref}
+% \renewcommand\thesubfigure{\arabic{subfigure}}
+
+\graphicspath{{figures}}
+
+% \usepackage{pgfpages}
+% \pgfpagesuselayout{2 on 1}[letterpaper,border shrink=2mm,landscape]
+
+% make beamer and subfigure work well
+\makeatletter
+\def\ext\@subfigure{lof}
+\makeatother
+
+% \usepackage{geometry}
+% \geometry{letterpaper,landscape}
+
+% \usepackage{caption}
+\usepackage[T1]{fontenc}
+\usepackage{mathtools}
+
+\usepackage{eso-pic}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usecolortheme{rose}
+\definecolor{coolblack}{rgb}{0.0, 0.18, 0.39}
+\definecolor{UBCblue}{rgb}{0.0, 0.18, 0.39} % UBC Blue (primary)
+\definecolor{UBCgrey}{rgb}{0.3686, 0.5255, 0.6235} % UBC Grey (secondary)
+\setbeamercolor{palette primary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette secondary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette tertiary}{bg=UBCblue,fg=white}
+\setbeamercolor{palette quaternary}{bg=UBCblue,fg=white}
+\setbeamercolor{structure}{fg=UBCblue} % itemize, enumerate, etc
+\setbeamercolor{section in toc}{fg=UBCblue} 
+\setbeamertemplate{headline}{}
+\setbeamertemplate{itemize items}[circle]
+\setbeamertemplate{enumerate items}[default]
+%\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{frametitle}[default][center]
+\setbeamertemplate{navigation symbols}{}
+\usefonttheme{serif}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Or whatever. Note that the encoding and the font should match. If T1
+% does not look nice, try deleting the line with the fontenc.
+
+\title[TDAQ \& VST]{
+  {
+%  \vspace{-1.0 in}
+    \bf {Collaboration Meeting: TDAQ Update} }
+}
+
+
+
+
+% \institute{\inst{1}Univ of Athens, \inst{2}Fermilab , \inst{3}Univ of Glasgow}
+
+\author[Sara Gamba]{
+  \fontseries{s}
+  \selectfont
+  { Sara Gamba, University of Pisa}
+}
+
+% \date{\today}
+\date{March 18th 2024}
+% - Use the \inst command only if there are several affiliations.
+% - Keep it simple, no one is interested in your street address.
+
+% - Either use conference name or its abbreviation.
+% - Not really informative to the audience, more for people (including
+%   yourself) who are reading the slides online
+
+
+% This is only inserted into the PDF information catalog. Can be left
+% out. 
+
+% If you have a file called "university-logo-filename.xxx", where xxx
+% is a graphic format that can be processed by latex or pdflatex,
+% resp., then you can add a logo as follows:
+
+%%% \pgfdeclareimage[height=0.5cm]{university-logo}{checks\_reorder.pdf}
+%%% \logo{\pgfuseimage{university-logo}}
+
+% Delete this, if you do not want the table of contents to pop up at
+% the beginning of each subsection:
+%%\AtBeginSubsection[] {
+%%%------------------------------------------------------------------------------
+%% \begin{frame}<beamer>{\underline{Outline}}
+%%    % \tableofcontents[currentsection,currentsubsection]
+%%  \tableofcontents[currentsection]
+%% \end{frame}
+%%}
+%%
+
+% If you wish to uncover everything in a step-wise fashion, uncomment
+% the following command: 
+
+% \beamerdefaultoverlayspecification{<+->}
+
+\hypersetup{%
+  colorlinks=UBCblue,% hyperlinks will be black
+  linkbordercolor=UBCblue,% hyperlink borders will be red
+  pdfborderstyle={/S/U/W 1}% border style will be underline of width 1pt
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% COMMANDS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\newcommand {\baftwo}        {\mbox{$BaF_2$}}
+\newcommand {\blue}          {\color{blue}}
+\newcommand {\deltaE}        {\mbox{$\delta{\rm-electron}$}}
+\newcommand {\eemm}          {\mbox{$ee\mu\mu$}}
+\newcommand {\et}            {\mbox{$E_T$}}
+\newcommand {\etcorr}        {\mbox{$E_T^{corr}$}}
+\newcommand {\gevcsq}        {\mbox{$GeV\!/c^2$}}
+\newcommand {\gt}            {\mbox{$>$}}
+\newcommand {\invfb}         {\mbox{$fb^{-1}$}}
+\newcommand {\invfbrm}       {\mbox{$\rm fb^{-1}$}}
+\newcommand {\invpb}         {\mbox{$pb^{-1}$}}
+\newcommand {\invpbrm}       {\mbox{$\rm pb^{-1}$}}
+\newcommand {\jpsi}          {\mbox{$J/\psi$}}
+\newcommand {\lt}            {\mbox{$<$}}
+\newcommand {\met}           {\mbox{${\not\! E}_{T}$}}
+\newcommand {\mmmm}          {\mbox{$\mu\mu\mu\mu$}}
+\newcommand {\mzz}           {\mbox{$M_{ZZ}$}}
+\newcommand {\pb}            {\mbox{\rm\,pb}}
+\newcommand {\ppbar}         {\mbox{$p\bar{p}$}}
+\newcommand {\pt}            {\mbox{$p_T$}}
+\newcommand {\red}           {\color{red}}
+\newcommand {\stat}          {\mbox{\rm (stat.)}}
+\newcommand {\statsys}       {\mbox{\rm (stat.+syst.)}}
+\newcommand {\syst}          {\mbox{\rm (syst.)}}
+\newcommand {\wpigamma}      {\mbox{$W^{\pm} \rightarrow \pi^{\pm} \gamma$}}
+\newcommand {\wenu}          {\mbox{$W^{\pm} \rightarrow e^{\pm} \nu$}}
+\newcommand {\wlnu}          {\mbox{$W^{\pm} \rightarrow l^{\pm} \nu$}}
+\newcommand {\wmunu}         {\mbox{$W^{\pm} \rightarrow \mu^{\pm} \nu$}}
+\newcommand {\wtaunu}        {\mbox{$W^{\pm} \rightarrow \tau^{\pm} \nu$}}
+\newcommand {\zpsigamma}     {\mbox{$    Z^{0} \rightarrow J/\psi \gamma$}}
+\newcommand {\zpigamma}      {\mbox{$\rm Z^{0} \rightarrow \pi^{0} \gamma$}}
+\newcommand {\zee}           {\mbox{$\rm Z^0 \rightarrow e^+ e^-$}}
+\newcommand {\zmumu}         {\mbox{$\rm Z^0 \rightarrow \mu^+ \mu^-$}}
+\newcommand {\ztautau}       {\mbox{$\rm Z^0 \rightarrow \tau^+ \tau^-$}}
+\newcommand {\zll }          {\mbox{$Z       \rightarrow l^{+}l^{-}$}}
+\newcommand {\zupsgamma}     {\mbox{$    Z^0 \rightarrow \Upsilon \gamma$}}
+\newcommand {\zzx }          {\mbox{$X       \to ZZ$}}
+\newcommand {\zzllll}        {\mbox{$ZZ \to \ell^+ \ell^- \ell^+ \ell^-$}}
+\newcommand {\zzllnn}        {\mbox{$ZZ \to \ell^+ \ell^- \nu \nu$}}
+\newcommand {\zzlljj}        {\mbox{$ZZ \to \ell^+ \ell^- j j$}}
+
+%\newcommand {\plots}  {/home/murat/figures}   % MURAT03
+
+   % MURAT05
+% \newcommand {\plots}  {/home/murat/figures/drs4}   % MURAT03
+
+
+\begin{document}
+
+%------------------------------------------------------------------------------
+% working document - no title page
+%------------------------------------------------------------------------------
+% \begin{frame}
+%   \titlepage
+% \end{frame}
+% -------------------------------------- uncomment this to get the table of contents 
+% \begin{frame}{\underline{Outline}}
+% \tableofcontents % [pausesections]
+%  % You might wish to add the option [pausesections]
+% \end{frame}
+% 
+%------------------------------------------------------------------------------
+% \AtBeginSection[] {
+%    \begin{frame}<beamer>{}
+     %     \tableofcontents[currentsection,currentsubsection]
+%    \tableofcontents[currentsection]
+%    \end{frame}
+% }
+% 
+% Structuring a talk is a difficult task and the following structure
+% may not be suitable. Here are some rules that apply for this
+% solution: 
+
+% - Exactly two or three sections (other than the summary).
+% - At *most* three subsections per section.
+% - Talk about 30s to 2min per frame. So there should be between about
+%   15 and 30 frames, all told.
+
+% - A conference audience is likely to know very little of what you
+%   are going to talk about. So *simplify*!
+% - In a 20min talk, getting the main ideas across is hard
+%   enough. Leave out details, even if it means being less precise than
+%   you think necessary.
+% - If you omit details that are vital to the proof/implementation,
+%   just say so once. Everybody will be happy with that.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}
+\centering
+\includegraphics[height=1cm]{figures/png/mu2e_logo_oval.png}
+\titlepage
+\centering
+\includegraphics[height=1cm]{figures/png/FNAL-Logo-NAL-Blue.png}\hspace{10mm}\includegraphics[height=1.6cm]{figures/pdf/cherubino.pdf}
+
+\end{frame}
+\begin{frame}
+Based on work of many people working on TDAQ. Monica, Richie, Vadim, Pasha contributed the most.
+\end{frame}
+
+\begin{frame}{A snapshot of the current job}
+\vspace{-3mm}
+\begin{itemize}
+\item Currently in the phase of commissioning and integration;
+\vspace{3mm}
+\item Reading out from a tracker station is imminent;
+\vspace{3mm}
+\item Getting ready to read the detector;
+\vspace{3mm}
+\item Learning how to read panels;
+\vspace{3mm}
+\item We are reading the individual panels (teststands).
+\vspace{5mm}
+\end{itemize}
+$\Rightarrow$ The rest of the talk will be about what we are doing and what we have accomplished during GR1
+\end{frame}
+\begin{frame}{Working area}
+    \begin{columns}
+        \begin{column}{0.5\framewidth}
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width= \columnwidth]{figures/jpg/IMG_20240219_090538.jpg}
+                \label{fig:enter-label}
+            \end{figure}
+\vspace{2mm}
+            \begin{itemize}
+            \item 3 test stands @IERC (only 2 have been used).
+            \end{itemize}
+        \end{column}
+        \begin{column}{0.5\framewidth}
+            \begin{itemize}
+          \item Each teststand has 96 channels;  
+\vspace{2mm}
+           \item DRAC card connected to the DTC installed in the DAQ computer mu2edaq09 via optical fibers; 
+\vspace{2mm}
+            \item A pulser implemented in the DRACs is sending pulses to the preamps (CAL side);
+\vspace{2mm}
+            \item  40 MHz ADCs;
+\vspace{2mm}
+            \item Pulse every 8 channel;
+\vspace{2mm}
+ \item One DTC and 1 or 2 ROCs at the same time.
+            \end{itemize}
+        \end{column}
+    \end{columns}
+    \vspace{5mm}
+\end{frame}
+
+\begin{frame}{Description of the readout logic}
+ \begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\textwidth]{figures/png/Screenshot_20240308_165327.png}
+   \label{fig:djn}
+ \end{figure}
+\begin{itemize}
+\item Running, most of the time, with an EW of 50 $\mu$s;
+\item The timing of the readout is uncorrelated with the generator timing sequences$\rightarrow$number of readout pulses is variable;
+\item ROC is reading digiFPGAs;
+\item ROC hit buffer stores up to 255 hits (\href{https://mu2e-docdb.fnal.gov/cgi-bin/sso/RetrieveFile?docid=47837&filename=mu2e-47837.pdf&version=1}{DOCDB47837});
+\item The channel readout sequence is fixed.
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Available Histograms and Error Identification}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+Real Time Monitoring:
+\vspace{4mm}
+\begin{itemize}
+\item  \textbf{Channel histograms}
+\vspace{4mm}
+%\begin{itemize}
+%\item Time distribution of hits;
+%\item Waveforms;
+%\item First sample, baseline, charge, pulse height, charge tail and mean time distribution;
+%\item $\Delta t$ distribution between hits.
+%\end{itemize}
+\item \textbf{ROC histograms}
+\vspace{4mm}
+%\begin{itemize}
+%\item Number of hits versus channel;
+%\item Waveform mean values versus channel. 
+%\end{itemize}
+\item \textbf{Event histograms}
+\vspace{4mm}
+%\begin{itemize}
+%\item Number of hits distribution;
+%\item Error distribution;
+%\item Number of bytes distribution.
+%\end{itemize}
+\end{itemize}
+\end{column}
+\begin{column}{0.5\framewidth}
+Real Time Diagnostic:
+\vspace{2mm}
+\begin{itemize}
+\item Number of bytes error bit; 
+\vspace{2mm}
+\item Number of ADC packets > 2;
+\vspace{2mm}
+\item Undefined link ID;
+\vspace{2mm}
+\item Invalid channel ID;
+\vspace{2mm}
+\item More hits than the maximum in a given channel.
+\end{itemize}
+\end{column}
+\end{columns}
+\vspace{4mm}
+\centering
+To be implemented:
+\begin{itemize}
+\vspace{2mm}
+\centering
+\item Slow control of the low and high voltages.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Channel response and crosstalks}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+\vspace{-2mm}
+\begin{itemize}
+\item Cross talks between channels:
+\\
+$\Rightarrow$ 1 pulsed channel out of 8.
+\item normal case:
+\end{itemize}
+\vspace{20mm}
+\begin{itemize}
+\item  Cross talks in odd pulsed channels only;
+\item  Asymmetric cross talks (e.g. 3$\rightarrow$5, not seen 3$\rightarrow$1).
+\end{itemize}
+\end{column}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/nhitsvsch_105421.pdf}
+   \label{fig:wfgkghl}
+ \end{figure}
+\vspace{2mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/nhitsvsch_105420.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+\begin{frame}{Different channels response}
+\vspace{-4mm}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/nhitsvsch_105423.pdf}
+   \label{fig:wfgkgnvjkhl}
+ \end{figure}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/deltatt.pdf}
+   \label{fig:wfgkgnvjkhl}
+ \end{figure}
+\end{column}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/deltat.pdf}
+   \label{fig:wfgkgnvjkhl}
+ \end{figure}
+
+\begin{itemize}
+\item one DEAD channel found;
+\item Less hits than expected;
+\item More hits than expected:
+\\
+$\Rightarrow$ $\Delta t$ distribution.
+\\
+$\Rightarrow$ inverted waveforms (next slide).
+\item need to reduce pulse duration.
+\end{itemize}
+\end{column}
+\end{columns}
+
+
+
+\end{frame}
+
+\begin{frame}{Waveforms}
+\vspace{-4mm}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/waveform_50_link_2.pdf}
+   \label{fig:wfgkghl}
+ \end{figure}
+\vspace{-9mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/waveform_50_link_2_neg.pdf}
+   \label{fig:wfgkgnvjkhl}
+ \end{figure}
+\end{column}
+\begin{column}{0.5\framewidth}
+\vspace{-2mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 1.0\columnwidth]{figures/pdf/waveform_biterror.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\vspace{-5mm}
+\begin{itemize}
+\item Negative peaks (baseline and tail);
+\item Peaks depth is 64, 128 or 192 (6th or/and 7th bit error);
+%;scan the position of these dips and check how many channels
+\item Reconstruction of the waveforms: isolation of negative peaks;
+\item Inverted wfs $ \rightarrow \Delta t$ distribution.
+\end{itemize}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}{Initial DQM Histograms}
+SPLIT IN 2
+Checking that all channel respond the same way to identify problematic channels (noise, inverted wf) DO THIS WITH ALL CHANNELS
+\\
+\vspace{-3mm}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/fs_vs_ch.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\vspace{-8mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/q_vs_ch.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/bl_vs_ch.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\vspace{-8mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/ph_vs_ch.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Noisy channels}
+\begin{itemize}
+\item noisy channels: value of the charge sistematically lower than the expected;
+
+\end{itemize}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= \framewidth]{figures/pdf/noisy.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{frame}
+
+\begin{frame}{Glitches}
+\begin{itemize}
+\item Different value of charge with respect to "normal", inverted and noisy pulses ($20 \ < \ q \ < \ 70$);
+\item origin of the glitches not understood yet.
+\end{itemize}
+\begin{columns}
+\begin{column}{0.5 \framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/glitches.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .90\columnwidth]{figures/pdf/glitcheswf.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\end{columns}
+\end{frame}
+\begin{frame}{Analysis of the charge and pulse height distribution}
+WRITE SOMETHING
+\vspace{-6mm}
+\begin{columns}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .85\columnwidth]{figures/pdf/p.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\vspace{-8mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .85\columnwidth]{figures/pdf/phtmean.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\end{column}
+\begin{column}{0.5\framewidth}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= .82\columnwidth]{figures/pdf/tmean.pdf}
+   \label{fig:wffytl}
+ \end{figure}
+\vspace{-7mm}
+\\
+{\tiny $$t_{mean}=\frac{\sum_i t_i \cdot q_i}{\sum_i q_i}$$}
+\\
+\vspace{-7mm}
+\begin{figure}[H]
+   \centering
+   \includegraphics[width= 0.95\columnwidth]{figures/png/pres.png}
+   \label{fig:wffytl}
+ \end{figure}
+BINNING PROBLEM
+\end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{Artdaq Testing}
+\end{frame}
+\begin{frame}{Global Run 1 Updates}
+\begin{itemize}
+\item 
+\item Horizontal Slice Test: all detectors talked with one CFO;
+\end{itemize}
+\end{frame} 
+\iffalse
+
+
+
+global run details: prima instabile 
+abbiamo ancora il firmware vecchio su daq09
+non ancora testato ilsoftware nuobo e accennare il rate ma non e un problema perche possiamo continuare a caratterizzare abbastanza bene l apparato (artdaq non e stato testato a quei rate) e pure slow control
+daq is composed of controlling, monitoring and data flowing
+gains, voltages devono essere controllati
+slide con immagine del tracker board : hardware building that dtc-dtc connection
+event building avverra nel dtc , not for cosmics
+to be done: implementare lo slow control dei lowhigh voltage
+
+qt
+\fi
+\end{document}

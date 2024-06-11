@@ -453,6 +453,10 @@ Hist_event_vs_roc_size_7->Draw("BOXSAMES");
 TCanvas * c15 = new TCanvas("c15","c15");
 Hist_event_vs_roc_status_9->SetLineColor(2);
 Hist_event_vs_roc_status_7->SetLineColor(4);
+Hist_event_vs_roc_status_9->SetFillColor(2);
+Hist_event_vs_roc_status_7->SetFillColor(3005);
+Hist_event_vs_roc_status_9->SetFillStyle(3004);
+Hist_event_vs_roc_status_7->SetFillStyle(4);
 Hist_event_vs_roc_status_9->Draw("BOX");
 Hist_event_vs_roc_status_7->Draw("BOXSAMES");
 
