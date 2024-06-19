@@ -1242,3 +1242,102 @@ c_n_e_7->SaveAs("external_1026_num_start.pdf");
 
 }
 
+
+
+void open_file_em_100000(){
+  results run1_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.001");
+  results run2_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.002");
+  results run3_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.003");
+  results run4_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.004");
+  results run5_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.005");
+  results run6_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.006");
+  results run7_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.007");
+  results run8_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.008");
+  results run9_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.009");
+  results run10_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_100000.010");
+ 
+  vector<int> number_of_events_em{run1_em.number_of_events,run2_em.number_of_events,run3_em.number_of_events,run4_em.number_of_events,run5_em.number_of_events,run6_em.number_of_events,run7_em.number_of_events,run8_em.number_of_events,run9_em.number_of_events,run10_em.number_of_events};
+  vector<int> number_of_100_em{run1_em.number_of_100,run2_em.number_of_100,run3_em.number_of_100,run4_em.number_of_100,run5_em.number_of_100,run6_em.number_of_100,run7_em.number_of_100,run8_em.number_of_100,run9_em.number_of_100,run10_em.number_of_100};
+  vector<int> number_of_101_em{run1_em.number_of_101,run2_em.number_of_101,run3_em.number_of_101,run4_em.number_of_101,run5_em.number_of_101,run6_em.number_of_101,run7_em.number_of_101,run8_em.number_of_101,run9_em.number_of_101,run10_em.number_of_101};
+  vector<int> number_of_108_em{run1_em.number_of_108,run2_em.number_of_108,run3_em.number_of_108,run4_em.number_of_108,run5_em.number_of_108,run6_em.number_of_108,run7_em.number_of_108,run8_em.number_of_108,run9_em.number_of_108,run10_em.number_of_108};
+  vector<int> number_of_180_em{run1_em.number_of_180,run2_em.number_of_180,run3_em.number_of_180,run4_em.number_of_180,run5_em.number_of_180,run6_em.number_of_180,run7_em.number_of_180,run8_em.number_of_180,run9_em.number_of_180,run10_em.number_of_180};
+  vector<int> number_of_508_em{run1_em.number_of_508,run2_em.number_of_508,run3_em.number_of_508,run4_em.number_of_508,run5_em.number_of_508,run6_em.number_of_508,run7_em.number_of_508,run8_em.number_of_508,run9_em.number_of_508,run10_em.number_of_508};
+  vector<int> number_of_other_errors_em{run1_em.number_of_other_errors,run2_em.number_of_other_errors,run3_em.number_of_other_errors,run4_em.number_of_other_errors,run5_em.number_of_other_errors,run6_em.number_of_other_errors,run7_em.number_of_other_errors,run8_em.number_of_other_errors,run9_em.number_of_other_errors,run10_em.number_of_other_errors};
+  vector<int> number_of_start_em{run1_em.number_of_start,run2_em.number_of_start,run3_em.number_of_start,run4_em.number_of_start,run5_em.number_of_start,run6_em.number_of_start,run7_em.number_of_start,run8_em.number_of_start,run9_em.number_of_start,run10_em.number_of_start};
+  vector<int> trial_em{1,2,3,4,5,6,7,8,9,10};
+
+  TCanvas * c_n_e_0 = new TCanvas("c_n_e","c_n_e");
+  TGraph *number_of_events_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_events_em[0]));
+  number_of_events_em_gr->SetTitle("Emulated CFO, 100000: Number of events");
+number_of_events_em_gr->SetMarkerStyle(20);
+  number_of_events_em_gr->Draw();
+  number_of_events_em_gr->GetXaxis()->SetTitle("run number");
+ number_of_events_em_gr->GetYaxis()->SetTitle("number of events");
+c_n_e_0->SaveAs("emulated_100000_num_events.pdf");
+  TCanvas * c_n_e_1 = new TCanvas("c_n_e_1","c_n_e_1");
+  TGraph *number_of_100_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_100_em[0]));
+  number_of_100_em_gr->SetTitle("Emulated CFO, 100000: number of 0x0100");
+ number_of_100_em_gr->SetMarkerStyle(20);
+  number_of_100_em_gr->Draw();
+number_of_100_em_gr->GetXaxis()->SetTitle("run number");
+number_of_100_em_gr->GetYaxis()->SetTitle("number of events");
+c_n_e_1->SaveAs("emulated_100000_num_100.pdf");
+
+  TCanvas * c_n_e_2 = new TCanvas("c_n_e_2","c_n_e_2");
+  TGraph *number_of_101_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_101_em[0]));
+  number_of_101_em_gr->SetTitle("Emulated CFO, 100000: number of 0x0101");
+number_of_101_em_gr->SetMarkerStyle(20);
+number_of_101_em_gr->GetXaxis()->SetTitle("run number");
+number_of_101_em_gr->GetYaxis()->SetTitle("number of events");
+  number_of_101_em_gr->Draw();
+c_n_e_2->SaveAs("emulated_100000_num_101.pdf");
+
+  TCanvas * c_n_e_3 = new TCanvas("c_n_e_3","c_n_e_3");
+  TGraph *number_of_108_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_108_em[0]));
+  number_of_108_em_gr->SetTitle("Emulated CFO, 100000: number of 0x0108");
+number_of_108_em_gr->SetMarkerStyle(20);
+number_of_108_em_gr->GetXaxis()->SetTitle("run number");
+number_of_108_em_gr->GetYaxis()->SetTitle("number of events");
+  number_of_108_em_gr->Draw();
+c_n_e_3->SaveAs("emulated_100000_num_108.pdf");
+
+  TCanvas * c_n_e_4 = new TCanvas("c_n_e_4","c_n_e_4");
+  TGraph *number_of_180_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_180_em[0]));
+  number_of_180_em_gr->SetTitle("Emulated CFO, 100000: number of 0x0180");
+number_of_180_em_gr->SetMarkerStyle(20);
+  number_of_180_em_gr->Draw();
+ number_of_180_em_gr->GetXaxis()->SetTitle("run number");
+number_of_180_em_gr->GetYaxis()->SetTitle("number of events");
+c_n_e_4->SaveAs("emulated_100000_num_180.pdf");
+
+  TCanvas * c_n_e_5 = new TCanvas("c_n_e_5","c_n_e_5");
+  TGraph *number_of_508_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_508_em[0]));
+  number_of_508_em_gr->SetTitle("Emulated CFO, 100000: number of 0x0508");
+number_of_508_em_gr->SetMarkerStyle(20);
+number_of_508_em_gr->GetXaxis()->SetTitle("run number");
+number_of_508_em_gr->GetYaxis()->SetTitle("number of events");
+  number_of_508_em_gr->Draw();
+c_n_e_5->SaveAs("emulated_100000_num_508.pdf");
+
+  TCanvas * c_n_e_6 = new TCanvas("c_n_e_6","c_n_e_6");
+  TGraph *number_of_other_errors_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_other_errors_em[0]));
+  number_of_other_errors_em_gr->SetTitle("Emulated CFO, 100000: number of other errors");
+ number_of_other_errors_em_gr->SetMarkerStyle(20);
+ number_of_other_errors_em_gr->GetXaxis()->SetTitle("run number");
+number_of_other_errors_em_gr->GetYaxis()->SetTitle("number of events");
+  number_of_other_errors_em_gr->Draw();
+c_n_e_6->SaveAs("emulated_100000_num_oth_err.pdf");
+
+  TCanvas * c_n_e_7 = new TCanvas("c_n_e_7","c_n_e_7");
+  TGraph *number_of_start_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_start_em[0]));
+  number_of_start_em_gr->SetTitle("Emulated CFO, 100000: first event tag");
+ number_of_start_em_gr->SetMarkerStyle(20);
+ number_of_start_em_gr->GetXaxis()->SetTitle("run number");
+number_of_start_em_gr->GetYaxis()->SetTitle("number of events");
+  number_of_start_em_gr->Draw();
+c_n_e_7->SaveAs("emulated_100000_num_start.pdf");
+
+
+
+}
+
