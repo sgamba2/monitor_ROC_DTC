@@ -6,6 +6,8 @@
 #include <stdlib.h>
 #include<bits/stdc++.h>
 #include "TGraph.h"
+#include "TMultiGraph.h"
+
 using namespace std;
 
 struct results{
@@ -31,7 +33,7 @@ results process(string filename){
     if (!in9.is_open()) {
         cerr << "impossible to open the file!" << endl;
     }
-    TH1F* Hist_dtc_event_size_9 = new TH1F(Form("Hist_dtc_event_size_%d",9),Form("Hist_dtc_event_size_%d",9), 100, 0.,100.);
+    /* TH1F* Hist_dtc_event_size_9 = new TH1F(Form("Hist_dtc_event_size_%d",9),Form("Hist_dtc_event_size_%d",9), 100, 0.,100.);
     TH1F* Hist_dtc_tag_9 = new TH1F(Form("Hist_dtc_tag_%d",9),Form("Hist_dtc_tag_%d",9), 10000, 0.,10000.);
     TH1F* Hist_residual_dtc_size_9 = new TH1F(Form("Hist_residual_dtc_size_%d",9),Form("Hist_residual_dtc_size_%d",9), 100, 0.,100.);
     TH2F* Hist_event_vs_dtc_size_9 = new TH2F(Form("Hist_event_vs_dtc_size_%d",9),Form("Hist_event_vs_dtc_size_%d",9), 10000, 0.,10000.,100, 0.,100.);
@@ -51,7 +53,7 @@ results process(string filename){
     TH1F* Hist_dtc_tag_vs_event_number_9 = new TH1F(Form("Hist_delta_dtc_tag_event_number_%d",9),Form("Hist_delta_dtc_tag_event_number_%d",9), 800, -400.,400.);
     TH2F* Hist_event_vs_roc_size_64 = new TH2F(Form(" Hist_event_vs_roc_size_64_%d",9),Form(" Hist_event_vs_roc_size_64_%d",9), 10000, 0.,10000.,20000, -100.,100.);
     TH1F* Hist_roc_size_64 = new TH1F(Form(" Hist_roc_size_64_%d",9),Form(" Hist_roc_size_64_%d",9), 20000, -100.,100.);
- TH1F* Hist_dtc_tag_vs_dtc_tag_minus_1_9= new TH1F(Form("Hist_dtc_tag_vs_dtc_tag_minus_1_%d",9),Form("Hist_dtc_tag_vs_dtc_tag_minus_1_%d",9), 800, -400.,400.);
+    TH1F* Hist_dtc_tag_vs_dtc_tag_minus_1_9= new TH1F(Form("Hist_dtc_tag_vs_dtc_tag_minus_1_%d",9),Form("Hist_dtc_tag_vs_dtc_tag_minus_1_%d",9), 800, -400.,400.);*/
 int k_9=0;
 unsigned char lo_9;
 int loc_9 = 0;
@@ -94,8 +96,8 @@ int       roc_status_passed_9=0;
         tot_dtc_size_9+=dtc_size_9;
         line_number_dtc_9=lines_count_9;
         num_events_9++;
-        Hist_line_number_dtc_9->Fill(line_number_dtc_9);
-        Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
+	// Hist_line_number_dtc_9->Fill(line_number_dtc_9);
+	// Hist_dtc_event_size_vs_line_number_dtc_9->Fill(dtc_size_9,line_number_dtc_9);
         val_9=1;
 	//printf(" 0x%08x: ",k_9*2);
 	// printf("0x%04x ",size_9);
@@ -107,7 +109,7 @@ int       roc_status_passed_9=0;
     if(loc_9==2 and val_9==1){
       //printf("0x%04x ",size_9);
     // printf("\n");
-	  Hist_dtc_tag_vs_dtc_tag_minus_1_9->Fill(size_9-error_dtc_tag);
+      // Hist_dtc_tag_vs_dtc_tag_minus_1_9->Fill(size_9-error_dtc_tag);
 
         dtc_tag_vec_9.push_back(size_9);
         dtc_size_vec_9.push_back(dtc_size_9);
@@ -117,11 +119,11 @@ int       roc_status_passed_9=0;
 	if(error_dtc_tag!=size_9-1 ){
 	  printf("XXXXXXXXXXXXX ERROR HERE EW TAG XXXXXXXXXXXXXX");
 	  ew_tag_wrong.push_back(lines_count_9);
-	  Hist_dtc_tag_9->Fill(size_9);
+	  //	  Hist_dtc_tag_9->Fill(size_9);
 
 	}
 	error_dtc_tag=size_9;
-	  Hist_dtc_tag_vs_event_number_9->Fill(size_9-event_number);
+	//Hist_dtc_tag_vs_event_number_9->Fill(size_9-event_number);
 
 	  event_number++;
 
@@ -139,7 +141,7 @@ int       roc_status_passed_9=0;
  
     if(loc_9==1 and val_status_9==1 and (hi_9%16)==1 and val_9==0 and lines_count_9>line_number_dtc_9+2){
         line_number_roc_vec_9.push_back(line_number_roc_9);
-        Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
+	//  Hist_dtc_size_vs_roc_size_9->Fill(dtc_size_9,roc_size_9);
         roc_size_vec_9.push_back(roc_size_9);
         roc_not_empty_9=1;
         val_status_9=0;
@@ -176,7 +178,7 @@ int       roc_status_passed_9=0;
     }
     if((line_number_dtc_9+dtc_size_9-1)==lines_count_9 ){
         dtc_size_9=-1;
-        Hist_NUM_ROCS_9->Fill(NUM_ROC_9);
+	// Hist_NUM_ROCS_9->Fill(NUM_ROC_9);
         NUM_ROC_9=0;
     }
     if((line_number_roc_9+roc_size_9-1)==lines_count_9 ){
@@ -197,7 +199,7 @@ printf("TOTAL NUMBER OF ROCS  size %d\n",size(roc_size_vec_9));
 tot_dtc_size_9/=(size(dtc_size_vec_9));
 tot_roc_size_9/=(size(roc_status_vec_9));
 
-
+/*
 
  for(int i=0;i<size(dtc_size_vec_9);i++){
    Hist_dtc_event_size_9->Fill(dtc_size_vec_9.at(i));
@@ -260,21 +262,21 @@ printf("TOTAL NUMBER OF ROCS  size %d\n",size(roc_size_vec_9));
 }
 
 
-TCanvas * c1600 = new TCanvas("c1600","c1600");
+ //TCanvas * c1600 = new TCanvas("c1600","c1600");
 Hist_roc_size_64->SetFillStyle(3005);
  Hist_roc_size_64->SetLineColor(4);
 
 
- Hist_roc_size_64->Draw("");
-TCanvas * c160 = new TCanvas("c160","c160");
+ //Hist_roc_size_64->Draw("");
+ //TCanvas * c160 = new TCanvas("c160","c160");
 Hist_event_vs_roc_size_64->SetFillStyle(3005);
  Hist_event_vs_roc_size_64->SetLineColor(4);
 Hist_event_vs_roc_size_64->SetTitle("ROC Size vs EW Tag");
 Hist_event_vs_roc_size_64->GetXaxis()->SetTitle("EW Tag");
 Hist_event_vs_roc_size_64->GetYaxis()->SetTitle("ROC size");
 
- Hist_event_vs_roc_size_64->Draw("");
- TCanvas * c3 = new TCanvas("c3", "c3");
+// Hist_event_vs_roc_size_64->Draw("");
+//TCanvas * c3 = new TCanvas("c3", "c3");
  Hist_num_events_9->Fill((double)num_events_9);
  Hist_num_events_9->SetLineColor(4);
 Hist_num_events_9->SetFillStyle(3005);
@@ -282,31 +284,31 @@ Hist_num_events_9->SetFillColor(4);
 Hist_num_events_9->SetTitle("Number of events Distribution");
 Hist_num_events_9->GetXaxis()->SetTitle("number of events");
 Hist_num_events_9->GetYaxis()->SetTitle("counts");
-Hist_num_events_9->Draw("");
+//Hist_num_events_9->Draw("");
 //c3->SaveAs("Hist_num_events.pdf");
 
-TCanvas * c1 = new TCanvas("c1", "c1");
+//TCanvas * c1 = new TCanvas("c1", "c1");
 Hist_dtc_event_size_9->SetLineColor(4);
 Hist_dtc_event_size_9->SetFillStyle(3005);
 Hist_dtc_event_size_9->SetFillColor(4);
 Hist_dtc_event_size_9->SetTitle("Event Size Distribution");
 Hist_dtc_event_size_9->GetXaxis()->SetTitle("Event Size");
 Hist_dtc_event_size_9->GetYaxis()->SetTitle("counts");
-Hist_dtc_event_size_9->Draw();
+//Hist_dtc_event_size_9->Draw();
 
 //c1->SaveAs("Hist_dtc_event_size.pdf");
 
-TCanvas * c2 = new TCanvas("c2", "c2");
+//TCanvas * c2 = new TCanvas("c2", "c2");
 Hist_line_number_dtc_9->SetLineColor(4);
 Hist_line_number_dtc_9->SetFillStyle(3005);
 Hist_line_number_dtc_9->SetFillColor(4);
-Hist_line_number_dtc_9->Draw();
+//Hist_line_number_dtc_9->Draw();
 
 //TCanvas * c4 = new TCanvas("c4", "c4");
 //Hist_dtc_event_size_vs_line_number_dtc_9->SetLineColor(4);
 //Hist_dtc_event_size_vs_line_number_dtc_9->Draw("BOX");
 
-TCanvas * c5 = new TCanvas("c5", "c5");
+//TCanvas * c5 = new TCanvas("c5", "c5");
 Hist_roc_size_9->SetLineColor(4);
 Hist_roc_size_9->SetFillStyle(3005);
 Hist_roc_size_9->SetFillColor(4);
@@ -314,20 +316,20 @@ Hist_roc_size_9->GetXaxis()->SetRangeUser(1,10000);
 Hist_roc_size_64->SetTitle("ROC Size Distribution");
 Hist_roc_size_64->GetXaxis()->SetTitle("ROC Size");
 Hist_roc_size_64->GetYaxis()->SetTitle("counts");
-Hist_roc_size_9->Draw();
+//Hist_roc_size_9->Draw();
 
 
-TCanvas * c6 = new TCanvas("c6", "c6");
+//TCanvas * c6 = new TCanvas("c6", "c6");
 Hist_line_number_roc_9->SetLineColor(4);
 Hist_line_number_roc_9->SetFillStyle(3005);
 Hist_line_number_roc_9->SetFillColor(4);
-Hist_line_number_roc_9->Draw();
+//Hist_line_number_roc_9->Draw();
 
-TCanvas * c60 = new TCanvas("c60", "c60");
+//TCanvas * c60 = new TCanvas("c60", "c60");
 Hist_dtc_tag_vs_event_number_9->SetLineColor(4);
 Hist_dtc_tag_vs_event_number_9->SetFillStyle(3005);
 Hist_dtc_tag_vs_event_number_9->SetFillColor(4);
-Hist_dtc_tag_vs_event_number_9->Draw();
+//Hist_dtc_tag_vs_event_number_9->Draw();
 
 //c2->SaveAs("Hist_dtc_event_size.pdf");
 //c4->SaveAs("Hist_dtc_event_size_vs_line_number_dtc.pdf");
@@ -341,22 +343,22 @@ Hist_dtc_tag_vs_event_number_9->Draw();
 //Hist_NUM_ROCS_9->SetFillColor(4);
 //Hist_NUM_ROCS_9->Draw();
 
-TCanvas * c8 = new TCanvas("c8", "c8");
+//TCanvas * c8 = new TCanvas("c8", "c8");
 Hist_roc_size_vs_line_number_roc_9->SetLineColor(4);
 Hist_roc_size_vs_line_number_roc_9->SetTitle("ROC Size vs Line number");
 Hist_roc_size_vs_line_number_roc_9->GetXaxis()->SetTitle("line number");
 Hist_roc_size_vs_line_number_roc_9->GetYaxis()->SetTitle("ROC size");
-Hist_roc_size_vs_line_number_roc_9->Draw("BOX");
+//Hist_roc_size_vs_line_number_roc_9->Draw("BOX");
 
 //TCanvas * c9 = new TCanvas("c9", "c9");
 //Hist_dtc_size_vs_roc_size_9->SetLineColor(4);
 //Hist_dtc_size_vs_roc_size_9->Draw("BOX");
 
-TCanvas * c10 = new TCanvas("c10", "c10");
+//TCanvas * c10 = new TCanvas("c10", "c10");
 Hist_dtc_tag_9->SetLineColor(4);
 Hist_dtc_tag_9->SetFillStyle(3005);
 Hist_dtc_tag_9->SetFillColor(4);
-Hist_dtc_tag_9->Draw();
+//Hist_dtc_tag_9->Draw();
 
 
 //c7->SaveAs("Hist_NUM_ROCS.pdf");
@@ -383,24 +385,24 @@ Hist_dtc_tag_9->Draw();
 //Hist_event_vs_dtc_tag_9->SetLineColor(4);
 //Hist_event_vs_dtc_tag_9->Draw("BOX");
 
-TCanvas * c14 = new TCanvas("c14","c14");
+//TCanvas * c14 = new TCanvas("c14","c14");
 Hist_event_vs_roc_size_9->SetLineColor(4);
 
-Hist_event_vs_roc_size_9->Draw("BOX");
+//Hist_event_vs_roc_size_9->Draw("BOX");
 
-TCanvas * c15 = new TCanvas("c15","c15");
+//TCanvas * c15 = new TCanvas("c15","c15");
  Hist_event_vs_roc_status_9->SetLineColor(4);
 Hist_event_vs_roc_size_9->SetTitle("ROC Status vs EW tag");
 Hist_event_vs_roc_size_9->GetXaxis()->SetTitle("EW tag");
 Hist_event_vs_roc_size_9->GetYaxis()->SetTitle("ROC status");
-Hist_event_vs_roc_status_9->Draw("BOX");
+//Hist_event_vs_roc_status_9->Draw("BOX");
 
-TCanvas * c16 = new TCanvas("c16","c16");
+//TCanvas * c16 = new TCanvas("c16","c16");
 Hist_roc_size_vs_roc_status_9->SetLineColor(4);
 Hist_roc_size_vs_roc_status_9->SetTitle("ROC Size vs ROC status");
 Hist_roc_size_vs_roc_status_9->GetXaxis()->SetTitle("ROC status");
 Hist_roc_size_vs_roc_status_9->GetYaxis()->SetTitle("ROC size");
-Hist_roc_size_vs_roc_status_9->Draw("");
+//Hist_roc_size_vs_roc_status_9->Draw("");
 
 //TCanvas * c17 = new TCanvas("c17","c17");
 //TProfile* p_9=Hist_event_vs_dtc_size_9->ProfileX();
@@ -410,22 +412,22 @@ Hist_roc_size_vs_roc_status_9->Draw("");
 //p_9->Draw("");
 
 
-TCanvas * c18 = new TCanvas("c18", "c18");
+//TCanvas * c18 = new TCanvas("c18", "c18");
 Hist_roc_status_9->SetLineColor(4);
-Hist_roc_status_9->Draw();
-TCanvas * c19 = new TCanvas("c19", "c19");
+//Hist_roc_status_9->Draw();
+//TCanvas * c19 = new TCanvas("c19", "c19");
 Hist_dtc_tag_vs_dtc_tag_minus_1_9->SetLineColor(4);
 Hist_dtc_tag_vs_dtc_tag_minus_1_9->SetTitle("#Delta EW tag[i]-[i-1]");
 Hist_dtc_tag_vs_dtc_tag_minus_1_9->GetXaxis()->SetTitle("#Delta EW tag");
 Hist_dtc_tag_vs_dtc_tag_minus_1_9->GetYaxis()->SetTitle("counts");
-Hist_dtc_tag_vs_dtc_tag_minus_1_9->Draw();
+//Hist_dtc_tag_vs_dtc_tag_minus_1_9->Draw();
 //c13->SaveAs("Hist_event_vs_dtc_tag.pdf");
 //c14->SaveAs("Hist_event_vs_roc_size.pdf");
 //c15->SaveAs("Hist_event_vs_roc_status.pdf");
 //c16->SaveAs("Hist_roc_size_vs_roc_status.pdf");
 //c17->SaveAs("Hist_event_vs_dtc.pdf");
 //c18->SaveAs("Hist_roc_status.pdf");
-
+*/
  results  NewResults;
  NewResults.number_of_100=0;
  NewResults.number_of_180=0;
@@ -732,19 +734,74 @@ c_n_e_7->SaveAs("emulated_10k_num_start.pdf");
 }
 
 void open_file_ex_66(){
-  results run1_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.001");
-  results run2_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.002");
-  results run3_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.003");
-  results run4_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.004");
-  results run5_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.005");
-  results run6_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.006");
-  results run7_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.007");
-  results run8_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.008");
-  results run9_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.009");
-  results run10_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.010");
-  results run11_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.011");
-  results run12_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.012");
+
+  results run1_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.001");
+  results run2_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.002");
+  results run3_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.003");
+  results run4_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.004");
+  results run5_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.005");
+  results run6_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.006");
+  results run7_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.007");
+  results run8_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.008");
+  results run9_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.009");
+  results run10_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.010");
+  results run11_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.011");
+  results run12_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.012");
+  results run13_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.013");
+  results run14_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.014");
+  results run15_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.015");
+  results run16_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.016");
+  results run17_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.017");
+  results run18_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.018");
+  results run19_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.019");
+  results run20_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/emulated_10000.020");
  
+  vector<int> number_of_events_em{run1_em.number_of_events,run2_em.number_of_events,run3_em.number_of_events,run4_em.number_of_events,run5_em.number_of_events,run6_em.number_of_events,run7_em.number_of_events,run8_em.number_of_events,run9_em.number_of_events,run10_em.number_of_events,run11_em.number_of_events,run12_em.number_of_events,run13_em.number_of_events,run14_em.number_of_events,run15_em.number_of_events,run16_em.number_of_events,run17_em.number_of_events,run18_em.number_of_events,run19_em.number_of_events,run20_em.number_of_events};
+  vector<int> number_of_100_em{run1_em.number_of_100,run2_em.number_of_100,run3_em.number_of_100,run4_em.number_of_100,run5_em.number_of_100,run6_em.number_of_100,run7_em.number_of_100,run8_em.number_of_100,run9_em.number_of_100,run10_em.number_of_100,run11_em.number_of_100,run12_em.number_of_100,run13_em.number_of_100,run14_em.number_of_100,run15_em.number_of_100,run16_em.number_of_100,run17_em.number_of_100,run18_em.number_of_100,run19_em.number_of_100,run20_em.number_of_100};
+  vector<int> number_of_101_em{run1_em.number_of_101,run2_em.number_of_101,run3_em.number_of_101,run4_em.number_of_101,run5_em.number_of_101,run6_em.number_of_101,run7_em.number_of_101,run8_em.number_of_101,run9_em.number_of_101,run10_em.number_of_101,run11_em.number_of_101,run12_em.number_of_101,run13_em.number_of_101,run14_em.number_of_101,run15_em.number_of_101,run16_em.number_of_101,run17_em.number_of_101,run18_em.number_of_101,run19_em.number_of_101,run20_em.number_of_101};
+  vector<int> number_of_108_em{run1_em.number_of_108,run2_em.number_of_108,run3_em.number_of_108,run4_em.number_of_108,run5_em.number_of_108,run6_em.number_of_108,run7_em.number_of_108,run8_em.number_of_108,run9_em.number_of_108,run10_em.number_of_108,run11_em.number_of_108,run12_em.number_of_108,run13_em.number_of_108,run14_em.number_of_108,run15_em.number_of_108,run16_em.number_of_108,run17_em.number_of_108,run18_em.number_of_108,run19_em.number_of_108,run20_em.number_of_108};
+  vector<int> number_of_180_em{run1_em.number_of_180,run2_em.number_of_180,run3_em.number_of_180,run4_em.number_of_180,run5_em.number_of_180,run6_em.number_of_180,run7_em.number_of_180,run8_em.number_of_180,run9_em.number_of_180,run10_em.number_of_180,run11_em.number_of_180,run12_em.number_of_180,run13_em.number_of_180,run14_em.number_of_180,run15_em.number_of_180,run16_em.number_of_180,run17_em.number_of_180,run18_em.number_of_180,run19_em.number_of_180,run20_em.number_of_180};
+  vector<int> number_of_508_em{run1_em.number_of_508,run2_em.number_of_508,run3_em.number_of_508,run4_em.number_of_508,run5_em.number_of_508,run6_em.number_of_508,run7_em.number_of_508,run8_em.number_of_508,run9_em.number_of_508,run10_em.number_of_508,run11_em.number_of_508,run12_em.number_of_508,run13_em.number_of_508,run14_em.number_of_508,run15_em.number_of_508,run16_em.number_of_508,run17_em.number_of_508,run18_em.number_of_508,run19_em.number_of_508,run20_em.number_of_508};
+  vector<int> number_of_other_errors_em{run1_em.number_of_other_errors,run2_em.number_of_other_errors,run3_em.number_of_other_errors,run4_em.number_of_other_errors,run5_em.number_of_other_errors,run6_em.number_of_other_errors,run7_em.number_of_other_errors,run8_em.number_of_other_errors,run9_em.number_of_other_errors,run10_em.number_of_other_errors,run11_em.number_of_other_errors,run12_em.number_of_other_errors,run13_em.number_of_other_errors,run14_em.number_of_other_errors,run15_em.number_of_other_errors,run16_em.number_of_other_errors,run17_em.number_of_other_errors,run18_em.number_of_other_errors,run19_em.number_of_other_errors,run20_em.number_of_other_errors};
+  vector<int> number_of_start_em{run1_em.number_of_start,run2_em.number_of_start,run3_em.number_of_start,run4_em.number_of_start,run5_em.number_of_start,run6_em.number_of_start,run7_em.number_of_start,run8_em.number_of_start,run9_em.number_of_start,run10_em.number_of_start,run11_em.number_of_start,run12_em.number_of_start,run13_em.number_of_start,run14_em.number_of_start,run15_em.number_of_start,run16_em.number_of_start,run17_em.number_of_start,run18_em.number_of_start,run19_em.number_of_start,run20_em.number_of_start};
+  vector<int> trial_em{1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20};
+  /*  printf("PPPPPP1\n");
+
+  results run1_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.001");
+    printf("PPPPPP2\n");
+
+  results run2_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.002");
+    printf("PPPPPP3\n");
+
+  results run3_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.003");
+    printf("PPPPPP4\n");
+
+  results run4_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.004");
+    printf("PPPPPP5\n");
+
+  results run5_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.005");
+    printf("PPPPPP6\n");
+
+  results run6_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.006");
+    printf("PPPPPP7\n");
+
+  results run7_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.007");
+    printf("PPPPPP8\n");
+
+  results run8_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.008");
+    printf("PPPPPP9\n");
+
+  results run9_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.009");
+    printf("PPPPPP10\n");
+
+  results run10_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.010");
+    printf("PPPPPP11\n");
+
+  results run11_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.011");
+    printf("PPPPPP12\n");
+
+  results run12_em= process("/exp/mu2e/data/projects/tracker/vst/datasets/2024-06-19/external_0066.012");
+  printf("PPPPPP1\n");
   vector<int> number_of_events_em{run1_em.number_of_events,run2_em.number_of_events,run3_em.number_of_events,run4_em.number_of_events,run5_em.number_of_events,run6_em.number_of_events,run7_em.number_of_events,run8_em.number_of_events,run9_em.number_of_events,run10_em.number_of_events,run11_em.number_of_events,run12_em.number_of_events};
   vector<int> number_of_100_em{run1_em.number_of_100,run2_em.number_of_100,run3_em.number_of_100,run4_em.number_of_100,run5_em.number_of_100,run6_em.number_of_100,run7_em.number_of_100,run8_em.number_of_100,run9_em.number_of_100,run10_em.number_of_100,run11_em.number_of_100,run12_em.number_of_100};
   vector<int> number_of_101_em{run1_em.number_of_101,run2_em.number_of_101,run3_em.number_of_101,run4_em.number_of_101,run5_em.number_of_101,run6_em.number_of_101,run7_em.number_of_101,run8_em.number_of_101,run9_em.number_of_101,run10_em.number_of_101,run11_em.number_of_101,run12_em.number_of_101};
@@ -754,76 +811,101 @@ void open_file_ex_66(){
   vector<int> number_of_other_errors_em{run1_em.number_of_other_errors,run2_em.number_of_other_errors,run3_em.number_of_other_errors,run4_em.number_of_other_errors,run5_em.number_of_other_errors,run6_em.number_of_other_errors,run7_em.number_of_other_errors,run8_em.number_of_other_errors,run9_em.number_of_other_errors,run10_em.number_of_other_errors,run11_em.number_of_other_errors,run12_em.number_of_other_errors};
   vector<int> number_of_start_em{run1_em.number_of_start,run2_em.number_of_start,run3_em.number_of_start,run4_em.number_of_start,run5_em.number_of_start,run6_em.number_of_start,run7_em.number_of_start,run8_em.number_of_start,run9_em.number_of_start,run10_em.number_of_start,run11_em.number_of_start,run12_em.number_of_start};
   vector<int> trial_em{1,2,3,4,5,6,7,8,9,10,11,12};
+  printf("PPPPPP1\n");
+  */
+
 
   TCanvas * c_n_e_0 = new TCanvas("c_n_e","c_n_e");
   TGraph *number_of_events_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_events_em[0]));
-  number_of_events_em_gr->SetTitle("External CFO, 66: Number of events");
+  number_of_events_em_gr->SetTitle("Number of events");
 number_of_events_em_gr->SetMarkerStyle(20);
+ number_of_events_em_gr->SetMarkerStyle(20);
+ number_of_events_em_gr->SetMarkerColor(1);
+  number_of_events_em_gr->SetLineColor(1);
 number_of_events_em_gr->GetXaxis()->SetTitle("run number");
 number_of_events_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_events_em_gr->Draw();
-c_n_e_0->SaveAs("external_66events_num_events.pdf");
-  TCanvas * c_n_e_1 = new TCanvas("c_n_e_1","c_n_e_1");
+//number_of_events_em_gr->Draw();
+ 
   TGraph *number_of_100_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_100_em[0]));
-  number_of_100_em_gr->SetTitle("External CFO, 66: number of 0x0100");
  number_of_100_em_gr->SetMarkerStyle(20);
+  number_of_100_em_gr->SetMarkerColor(3);
+  number_of_100_em_gr->SetLineColor(3);
+    number_of_100_em_gr->SetTitle("Number of 0x0100");
+
 number_of_100_em_gr->GetXaxis()->SetTitle("run number");
 number_of_100_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_100_em_gr->Draw();
-c_n_e_1->SaveAs("external_66events_num_100.pdf");
+// number_of_100_em_gr->Draw();
 
-  TCanvas * c_n_e_2 = new TCanvas("c_n_e_2","c_n_e_2");
   TGraph *number_of_101_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_101_em[0]));
-  number_of_101_em_gr->SetTitle("External CFO, 66: number of 0x0101");
+   number_of_101_em_gr->SetMarkerColor(4);
+  number_of_101_em_gr->SetLineColor(4);
 number_of_101_em_gr->SetMarkerStyle(20);
-  number_of_101_em_gr->Draw();
-c_n_e_2->SaveAs("external_66events_num_101.pdf");
+  number_of_101_em_gr->SetTitle("Number of 0x0101");
 
-  TCanvas * c_n_e_3 = new TCanvas("c_n_e_3","c_n_e_3");
+ number_of_101_em_gr->GetXaxis()->SetTitle("run number");
+number_of_101_em_gr->GetYaxis()->SetTitle("number of events");
+// number_of_101_em_gr->Draw();
+
   TGraph *number_of_108_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_108_em[0]));
-  number_of_108_em_gr->SetTitle("External CFO, 66: number of 0x0108");
 number_of_108_em_gr->SetMarkerStyle(20);
+  number_of_108_em_gr->SetMarkerColor(2);
+  number_of_108_em_gr->SetLineColor(2);
+    number_of_108_em_gr->SetTitle("Number of 0x0108");
+
 number_of_108_em_gr->GetXaxis()->SetTitle("run number");
 number_of_108_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_108_em_gr->Draw();
-c_n_e_3->SaveAs("external_66events_num_108.pdf");
+//number_of_108_em_gr->Draw();
 
-  TCanvas * c_n_e_4 = new TCanvas("c_n_e_4","c_n_e_4");
   TGraph *number_of_180_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_180_em[0]));
-  number_of_180_em_gr->SetTitle("External CFO, 66: number of 0x0180");
 number_of_180_em_gr->SetMarkerStyle(20);
+    number_of_180_em_gr->SetMarkerColor(28);
+  number_of_180_em_gr->SetLineColor(28);
+    number_of_180_em_gr->SetTitle("Number of 0x0180");
+
 number_of_180_em_gr->GetXaxis()->SetTitle("run number");
 number_of_180_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_180_em_gr->Draw();
-c_n_e_4->SaveAs("external_66events_num_180.pdf");
+// number_of_180_em_gr->Draw();
 
-  TCanvas * c_n_e_5 = new TCanvas("c_n_e_5","c_n_e_5");
   TGraph *number_of_508_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_508_em[0]));
-  number_of_508_em_gr->SetTitle("External CFO, 66: number of 0x0508");
 number_of_508_em_gr->SetMarkerStyle(20);
+    number_of_508_em_gr->SetMarkerColor(6);
+  number_of_508_em_gr->SetLineColor(6);
+    number_of_508_em_gr->SetTitle("Number of 0x0508");
+
 number_of_508_em_gr->GetXaxis()->SetTitle("run number");
 number_of_508_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_508_em_gr->Draw();
-c_n_e_5->SaveAs("external_66events_num_508.pdf");
-
-  TCanvas * c_n_e_6 = new TCanvas("c_n_e_6","c_n_e_6");
-  TGraph *number_of_other_errors_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_other_errors_em[0]));
-  number_of_other_errors_em_gr->SetTitle("External CFO, 66: number of other errors");
+// number_of_508_em_gr->Draw();
+  number_of_508_em_gr->GetYaxis()->SetRangeUser(-1,67);
+  /* TGraph *number_of_other_errors_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_other_errors_em[0]));
  number_of_other_errors_em_gr->SetMarkerStyle(20);
+   
 number_of_other_errors_em_gr->GetXaxis()->SetTitle("run number");
 number_of_other_errors_em_gr->GetYaxis()->SetTitle("number of events");
   number_of_other_errors_em_gr->Draw();
-c_n_e_6->SaveAs("external_66events_num_oth_err.pdf");
 
-  TCanvas * c_n_e_7 = new TCanvas("c_n_e_7","c_n_e_7");
-  TGraph *number_of_start_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_start_em[0]));
-  number_of_start_em_gr->SetTitle("External CFO, 66: first event tag");
+   TGraph *number_of_start_em_gr=new TGraph(size(trial_em),&(trial_em[0]),&(number_of_start_em[0]));
  number_of_start_em_gr->SetMarkerStyle(20);
+  number_of_101_em_gr->SetMarkerColor(4);
+  number_of_101_em_gr->SetLineColor(4);
 number_of_start_em_gr->GetXaxis()->SetTitle("run number");
 number_of_start_em_gr->GetYaxis()->SetTitle("number of events");
-  number_of_start_em_gr->Draw();
-c_n_e_7->SaveAs("external_66events_num_start.pdf");
+number_of_start_em_gr->Draw();*/
+  auto mg1 = new TMultiGraph();
+mg1->Add(number_of_508_em_gr, "APL");
+		mg1->Add(number_of_180_em_gr, "APL");
+			mg1->Add(number_of_100_em_gr, "APL");
+				mg1->Add(number_of_101_em_gr, "APL");
+					mg1->Add(number_of_events_em_gr, "APL");
+						mg1->Add(number_of_108_em_gr, "APL");
 
+					mg1->SetTitle("Emulated CFO, 10k events generated");
+					mg1->GetYaxis()->SetTitle("number of events");
+							      	mg1->GetXaxis()->SetTitle("run number");
+
+	mg1->Draw("APL");
+		c_n_e_0->BuildLegend();
+
+c_n_e_0->SaveAs("10k.pdf");
 
 
 }
